@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">InventoryAppABND</string>
+    <string name="editor_activity_label">EntryEditor</string>
+    <string name="entry_type_label">Equipment type</string>
+    <string name="entry_tagn_label">Tag number</string>
+    <string name="entry_tagn_hint">Max 6 characters</string>
+    <string name="entry_sn_label">Serial number</string>
+    <string name="entry_user_label">Current user</string>
+    <string name="entry_user_hint">Leave blank if not assigned to a user</string>
+    <string name="item_type_pc">PC</string>
+    <string name="item_type_tablet">Tablet</string>
+    <string name="item_type_monitor">Monitor</string>
+    <string name="item_type_printer">Printer</string>
+    <string name="item_type_mobile">Mobile</string>
+    <string name="item_type_other">Other</string>
+</resources>

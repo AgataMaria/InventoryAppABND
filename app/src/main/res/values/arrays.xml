@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List of options for the item type -->
+    <string-array name="array_item_type">
+        <item>@string/item_type_pc</item>
+        <item>@string/item_type_tablet</item>
+        <item>@string/item_type_monitor</item>
+        <item>@string/item_type_printer</item>
+        <item>@string/item_type_mobile</item>
+        <item>@string/item_type_other</item>
+    </string-array>
+</resources>
