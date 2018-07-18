@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.android.inventoryappabnd.Data.DBHelperClass;
-import com.example.android.inventoryappabnd.Data.InventoryContract;
+import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 
 public class InventoryActivity extends AppCompatActivity {
+
+    private DBHelperClass myDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,9 @@ public class InventoryActivity extends AppCompatActivity {
 
     //TODO: REMOVE THE HELPER METHOD IN INVENTORY ACTIVITY AFTER CONFIRMED DB CREATED + CAN READ OK
     private void displayDatabaseInfo() {
-        DBHelperClass myDBHelper = new DBHelperClass(this);
+        myDBHelper = new DBHelperClass(this);
         SQLiteDatabase db = myDBHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + InventoryContract.InventoryEntry.TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + InventoryEntry.TABLE_NAME, null);
         try {
 
             TextView displayView = (TextView) findViewById(R.id.text_view_main_screen_summary);

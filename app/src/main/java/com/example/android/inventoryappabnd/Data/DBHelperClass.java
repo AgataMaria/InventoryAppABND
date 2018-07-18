@@ -28,8 +28,6 @@ public class DBHelperClass  extends SQLiteOpenHelper {
                 + InventoryEntry.COLUMN_ITEM_SN + " TEXT, "
                 + InventoryEntry.COLUMN_USER + " TEXT);";
 
-        Log.i("sql komenda", SQL_CREATE_TABLE);
-
         db.execSQL(SQL_CREATE_TABLE);
     }
 
