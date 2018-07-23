@@ -96,15 +96,16 @@ public class EntryEditor extends AppCompatActivity {
 
     private void insertItem() {
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
+        cv = new ContentValues();
 
-        // get input values from the editor form fielss
-        String itemType = mItemTypeSpinner.getSelectedItem().toString();
+        // get input values from the editor form fields
+        //String itemType = mItemTypeSpinner.getSelectedItem().toString();
         String itemTagN = String.valueOf(Integer.parseInt(mItemTagNET.getText().toString()));
         String itemSN = mItemSNET.getText().toString().trim();
         String itemUser = mItemUserET.getText().toString().trim();
 
         // assign input values to table columns
-        cv.put(InventoryEntry.COLUMN_ITEM_TYPE, itemType);
+        cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
         cv.put(InventoryEntry.COLUMN_ITEM_TAG_N, itemTagN);
         cv.put(InventoryEntry.COLUMN_ITEM_SN, itemSN);
         cv.put(InventoryEntry.COLUMN_USER, itemUser);
