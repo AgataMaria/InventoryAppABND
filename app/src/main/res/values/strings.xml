@@ -1,16 +1,18 @@
 <resources>
-    <string name="app_name">InventoryAppABND</string>
+    <string name="app_name">Inventory Manager</string>
     <string name="editor_activity_label">EntryEditor</string>
     <string name="entry_type_label">Equipment type</string>
-    <string name="entry_tagn_label">Tag number</string>
-    <string name="entry_tagn_hint">Max 6 characters</string>
-    <string name="entry_sn_label">Serial number</string>
-    <string name="entry_user_label">Current user</string>
-    <string name="entry_user_hint">Leave blank if not assigned to a user</string>
+    <string name="entry_name_label">Product name</string>
+    <string name="entry_prc_label">Price</string>
+    <string name="entry_prc_hint">0.00</string>
+    <string name="entry_qnt_label">Quantity</string>
+    <string name="entry_supp_name_label">Supplier</string>
+    <string name="entry_supp_no_label">Supplier Contact</string>
     <string name="item_type_pc">PC</string>
     <string name="item_type_tablet">Tablet</string>
     <string name="item_type_monitor">Monitor</string>
     <string name="item_type_printer">Printer</string>
     <string name="item_type_mobile">Mobile</string>
     <string name="item_type_other">Other</string>
+    <string name="supp_phone_prefix">+44</string>
 </resources>

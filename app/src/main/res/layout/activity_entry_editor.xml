@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/space_small"
     tools:context=".EntryEditor">
@@ -40,7 +41,7 @@
 
         <TextView
             style="@style/EntryLabelStyle"
-            android:text="@string/entry_tagn_label" />
+            android:text="@string/entry_name_label" />
 
 
         <LinearLayout
@@ -53,8 +54,7 @@
             <EditText
                 android:id="@+id/entry2_et"
                 style="@style/EditTextStyle"
-                android:hint="@string/entry_tagn_hint"
-                android:inputType="number" />
+                android:inputType="textCapCharacters" />
 
         </LinearLayout>
     </LinearLayout>
@@ -67,7 +67,7 @@
 
         <TextView
             style="@style/EntryLabelStyle"
-            android:text="@string/entry_sn_label" />
+            android:text="@string/entry_prc_label" />
 
 
         <LinearLayout
@@ -80,7 +80,7 @@
             <EditText
                 android:id="@+id/entry3_et"
                 style="@style/EditTextStyle"
-                android:inputType="textCapCharacters" />
+                android:inputType="numberDecimal" />
 
         </LinearLayout>
     </LinearLayout>
@@ -93,7 +93,7 @@
 
         <TextView
             style="@style/EntryLabelStyle"
-            android:text="@string/entry_user_label" />
+            android:text="@string/entry_qnt_label" />
 
 
         <LinearLayout
@@ -106,8 +106,67 @@
             <EditText
                 android:id="@+id/entry4_et"
                 style="@style/EditTextStyle"
-                android:hint="@string/entry_user_hint"
+                android:inputType="number" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/entry5_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/EntryLabelStyle"
+            android:text="@string/entry_supp_name_label" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/space_small">
+
+            <EditText
+                android:id="@+id/entry5_et"
+                style="@style/EditTextStyle"
                 android:inputType="textCapWords" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/entry6_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/EntryLabelStyle"
+            android:text="@string/entry_supp_no_label" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_small">
+
+            <TextView
+                style="@style/EntryLabelStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/supp_phone_prefix" />
+
+            <EditText
+                android:id="@+id/entry6_et"
+                style="@style/EditTextStyle"
+                android:layout_weight="6"
+                android:inputType="number" />
 
         </LinearLayout>
     </LinearLayout>

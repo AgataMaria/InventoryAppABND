@@ -20,7 +20,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:paddingTop">@dimen/space_large</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
@@ -30,6 +30,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <!-- Style for the TextView in the Inventory Activity -->
+    <style name="Inventory">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/text_small</item>
     </style>
 
 </resources>

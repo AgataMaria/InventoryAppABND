@@ -27,10 +27,13 @@ public class EntryEditor extends AppCompatActivity {
     private DBHelperClass myDbHelper;
 
     // Entry editor form fields elements
+
     private Spinner mItemTypeSpinner;
-    private EditText mItemTagNET;
-    private EditText mItemSNET;
-    private EditText mItemUserET;
+    private EditText mItemNameET;
+    private EditText mItemPriceET;
+    private EditText mItemQntET;
+    private EditText mItemSuppNameET;
+    private EditText mItemSuppNoET;
 
     // Item type variable
     private int mItemTypeValue = InventoryEntry.ITEM_TYPE_PC;
@@ -42,18 +45,17 @@ public class EntryEditor extends AppCompatActivity {
         myDbHelper = new DBHelperClass(this);
 
         // Assign editor forms elements to views by ID and set up hints for EditText fields
-        mItemTypeSpinner = (Spinner) findViewById(R.id.entry1_spinner);
-        mItemTagNET = (EditText) findViewById(R.id.entry2_et);
-        mItemTagNET.setHint(Html.fromHtml(
-                   "<small>" + getString(R.string.entry_tagn_hint) + "</small>" ));
-        mItemSNET = (EditText) findViewById(R.id.entry3_et);
-        mItemUserET = (EditText) findViewById(R.id.entry4_et);
-        mItemUserET.setHint(Html.fromHtml(
-                    "<small>" + getString(R.string.entry_user_hint) + "</small>" ));
+        mItemTypeSpinner = findViewById(R.id.entry1_spinner);
+        mItemNameET = findViewById(R.id.entry2_et);
+        mItemPriceET = findViewById(R.id.entry3_et);
+        mItemPriceET.setHint(Html.fromHtml(
+                "<small>" + getString(R.string.entry_prc_hint) + "</small>"));
+        mItemQntET = findViewById(R.id.entry4_et);
+        mItemSuppNameET = findViewById(R.id.entry5_et);
+        mItemSuppNoET = findViewById(R.id.entry6_et);
 
         setupSpinner();
     }
-
 
     private void setupSpinner() {
         // Create adapter for spinner to use with the values from the array resource
@@ -65,7 +67,6 @@ public class EntryEditor extends AppCompatActivity {
         mItemTypeSpinner.setAdapter(mSpinnerAdapter);
 
         // Assign table values to array values
-        //TODO: Change to switch EntryEditor spinner
         mItemTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -99,16 +100,20 @@ public class EntryEditor extends AppCompatActivity {
         cv = new ContentValues();
 
         // get input values from the editor form fields
-        //String itemType = mItemTypeSpinner.getSelectedItem().toString();
-        String itemTagN = String.valueOf(Integer.parseInt(mItemTagNET.getText().toString()));
-        String itemSN = mItemSNET.getText().toString().trim();
-        String itemUser = mItemUserET.getText().toString().trim();
+
+        String itemName = mItemNameET.getText().toString().trim();
+        String itemPrice = String.valueOf(Double.parseDouble(mItemPriceET.getText().toString().trim()));
+        String itemQnt = String.valueOf(Integer.parseInt(mItemQntET.getText().toString().trim()));
+        String itemSuppName = mItemSuppNameET.getText().toString().trim();
+        String itemSuppNo = String.valueOf(Integer.parseInt(mItemSuppNoET.getText().toString().trim()));
 
         // assign input values to table columns
         cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
-        cv.put(InventoryEntry.COLUMN_ITEM_TAG_N, itemTagN);
-        cv.put(InventoryEntry.COLUMN_ITEM_SN, itemSN);
-        cv.put(InventoryEntry.COLUMN_USER, itemUser);
+        cv.put(InventoryEntry.COLUMN_ITEM_NAME, itemName);
+        cv.put(InventoryEntry.COLUMN_ITEM_PRICE, itemPrice);
+        cv.put(InventoryEntry.COLUMN_ITEM_QNT, itemQnt);
+        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NAME, itemSuppName);
+        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo);
 
         // insert assigned columns + their values to table
         long newRowID = db.insert(InventoryEntry.TABLE_NAME, null, cv);
@@ -116,9 +121,8 @@ public class EntryEditor extends AppCompatActivity {
         // check value of the editor input
         Log.v("Editor entry value", "new row" + newRowID);
 
-        // display toast message confirming successful entry
-        Toast.makeText(this, "New item added to your inventory with ID: " + newRowID, Toast.LENGTH_SHORT).show();
-
+        // display a toast message confirming successful entry
+        Toast.makeText(this, "New item added to your inventory with ID: " + newRowID, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -129,17 +133,12 @@ public class EntryEditor extends AppCompatActivity {
 
     // Set Editor menu options item selected behaviour
     public boolean onOptionsItemSelected(MenuItem item) {
-           switch (item.getItemId()) {
+        switch (item.getItemId()) {
             // Respond to a click on the "Save" menu option
             case R.id.editor_menu_action_save:
 
                 insertItem();
                 finish();
-
-            // Respond to a click on the "Delete" menu option
-            case R.id.editor_menu_action_delete:
-
-                return true;
 
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);

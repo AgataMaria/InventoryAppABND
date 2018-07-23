@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,7 +30,6 @@ public class InventoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -47,12 +46,6 @@ public class InventoryActivity extends AppCompatActivity {
         showDbInfo();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
     private void displayDatabaseInfo() {
         myDBHelper = new DBHelperClass(this);
         SQLiteDatabase db = myDBHelper.getReadableDatabase();
@@ -60,18 +53,18 @@ public class InventoryActivity extends AppCompatActivity {
 
         // define projection scope for the db query method
         String[] projection = {
-                InventoryEntry._ID, InventoryEntry.COLUMN_ITEM_TYPE, InventoryEntry.COLUMN_ITEM_SN, InventoryEntry.COLUMN_USER
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_TYPE,
+                InventoryEntry.COLUMN_ITEM_NAME,
+                InventoryEntry.COLUMN_ITEM_PRICE,
+                InventoryEntry.COLUMN_ITEM_QNT,
+                InventoryEntry.COLUMN_ITEM_SUPP_NAME,
+                InventoryEntry.COLUMN_ITEM_SUPP_NO
         };
-
-        // String selectionByItemType = InventoryEntry.COLUMN_ITEM_TYPE + "=?";
-        // String[] selectionByItemTypeArgs = new String[]{String.valueOf(InventoryEntry.ITEM_TYPE_MOBILE)};
-
-        // cursor to return db query - uses projection as the first param after the table name, if null will return ALL
-        // Cursor cursor = db.query(InventoryEntry.TABLE_NAME, projection, selectionByItemType, selectionByItemTypeArgs, null, null, null);
 
         Cursor cursor = db.query(InventoryEntry.TABLE_NAME, projection, null, null, null, null, null);
         try {
-            summaryView.setText("You currently have " + cursor.getCount() + " items in your inventory.");
+            summaryView.setText("You currently have " + cursor.getCount() + " items in stock.");
         } finally {
             cursor.close();
         }
@@ -80,31 +73,45 @@ public class InventoryActivity extends AppCompatActivity {
     private void showDbInfo() {
         myDBHelper = new DBHelperClass(this);
         SQLiteDatabase db = myDBHelper.getReadableDatabase();
-        TextView dbInfo = (TextView) findViewById(R.id.tv_main_show_db);
 
         // define projection scope for the db query method
         String[] projection = {
-                InventoryEntry._ID, InventoryEntry.COLUMN_ITEM_TYPE, InventoryEntry.COLUMN_ITEM_SN, InventoryEntry.COLUMN_USER
+                InventoryEntry._ID, InventoryEntry.COLUMN_ITEM_TYPE, InventoryEntry.COLUMN_ITEM_NAME, InventoryEntry.COLUMN_ITEM_PRICE, InventoryEntry.COLUMN_ITEM_QNT, InventoryEntry.COLUMN_ITEM_SUPP_NAME, InventoryEntry.COLUMN_ITEM_SUPP_NO
         };
 
         // cursor to return db query - this one shows all info from the database
         Cursor cursor = db.query(InventoryEntry.TABLE_NAME, projection, null, null, null, null, null);
         int idColumnIndex = cursor.getColumnIndex(InventoryEntry._ID);
         int itemTypeColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_TYPE);
-        int itemSNColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_SN);
-        int itemUserColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_USER);
+        int itemNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_NAME);
+        int itemPriceColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_PRICE);
+        int itemQntColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_QNT);
+        int itemSuppNameColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_SUPP_NAME);
+        int itemSuppNoColumnIndex = cursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_SUPP_NO);
         try {
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(idColumnIndex);
                 String itemType = String.valueOf(cursor.getString(itemTypeColumnIndex));
-                String itemSN = cursor.getString(itemSNColumnIndex);
-                String itemUser = cursor.getString(itemUserColumnIndex);
-                dbInfo.setText("\n" + id + TABLE_COLUMNS_SEPARATOR + itemType + TABLE_COLUMNS_SEPARATOR + itemSN + TABLE_COLUMNS_SEPARATOR + itemUser);
+                String itemName = cursor.getString(itemNameColumnIndex);
+                int itemPrice = cursor.getInt(itemPriceColumnIndex);
+                int itemQnt = cursor.getInt(itemQntColumnIndex);
+                String itemSuppName = cursor.getString(itemSuppNameColumnIndex);
+                int itemSuppNo = cursor.getInt(itemSuppNoColumnIndex);
+
+                //check what has been recorded in the db so far
+                Log.v("Inv Act: row added", "\n" + id + TABLE_COLUMNS_SEPARATOR
+                        + itemType + TABLE_COLUMNS_SEPARATOR
+                        + itemName + TABLE_COLUMNS_SEPARATOR
+                        + itemPrice + TABLE_COLUMNS_SEPARATOR
+                        + itemQnt + TABLE_COLUMNS_SEPARATOR
+                        + itemSuppName + TABLE_COLUMNS_SEPARATOR
+                        + itemSuppNo + TABLE_COLUMNS_SEPARATOR);
             }
         } finally {
-                cursor.close();
-            }
+            cursor.close();
+            db.close();
         }
+    }
 }
 
 

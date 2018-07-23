@@ -10,9 +10,11 @@ public final class InventoryContract {
         public static final String TABLE_NAME = "inventory";
         public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_ITEM_TYPE = "type";
-        public static final String COLUMN_ITEM_TAG_N = "tag_n";
-        public static final String COLUMN_ITEM_SN = "s_n";
-        public static final String COLUMN_USER = "user";
+        public static final String COLUMN_ITEM_NAME = "item_name";
+        public static final String COLUMN_ITEM_PRICE = "price";
+        public static final String COLUMN_ITEM_QNT = "quantity";
+        public static final String COLUMN_ITEM_SUPP_NAME = "supp_name";
+        public static final String COLUMN_ITEM_SUPP_NO = "supp_no";
 
 //  Possible  values for item type
 
