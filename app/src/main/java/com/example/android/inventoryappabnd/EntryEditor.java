@@ -1,7 +1,7 @@
 package com.example.android.inventoryappabnd;
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -17,14 +17,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.inventoryappabnd.Data.DBHelperClass;
 import com.example.android.inventoryappabnd.Data.InventoryContract;
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 
 public class EntryEditor extends AppCompatActivity {
-
-    private ContentValues cv;
-    private DBHelperClass myDbHelper;
 
     // Entry editor form fields elements
 
@@ -42,7 +38,6 @@ public class EntryEditor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_editor);
-        myDbHelper = new DBHelperClass(this);
 
         // Assign editor forms elements to views by ID and set up hints for EditText fields
         mItemTypeSpinner = findViewById(R.id.entry1_spinner);
@@ -96,11 +91,9 @@ public class EntryEditor extends AppCompatActivity {
     }
 
     private void insertItem() {
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
-        cv = new ContentValues();
+        ContentValues cv = new ContentValues();
 
         // get input values from the editor form fields
-
         String itemName = mItemNameET.getText().toString().trim();
         String itemPrice = String.valueOf(Double.parseDouble(mItemPriceET.getText().toString().trim()));
         String itemQnt = String.valueOf(Integer.parseInt(mItemQntET.getText().toString().trim()));
@@ -116,13 +109,17 @@ public class EntryEditor extends AppCompatActivity {
         cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo);
 
         // insert assigned columns + their values to table
-        long newRowID = db.insert(InventoryEntry.TABLE_NAME, null, cv);
+        Uri newRowUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, cv);
 
         // check value of the editor input
-        Log.v("Editor entry value", "new row" + newRowID);
+        Log.v("Editor entry value", "new row" + newRowUri);
 
-        // display a toast message confirming successful entry
-        Toast.makeText(this, "New item added to your inventory with ID: " + newRowID, Toast.LENGTH_LONG).show();
+        // display a toast message confirming successful or unsuccessful entry
+        if (newRowUri == null) {
+            Toast.makeText(this, R.string.save_failed_toast, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, getString(R.string.item_saved_toast) + newRowUri, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

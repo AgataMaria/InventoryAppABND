@@ -24,5 +24,9 @@ package="com.example.android.inventoryappabnd">
         android:name="android.support.PARENT_ACTIVITY"
         android:value=".InventoryActivity" />
     </activity>
+    <provider
+        android:authorities=".com.example.android.inventoryappabnd"
+        android:name=".Data.InventoryProvider"
+        android:exported="false"/>
 </application>
 </manifest>

@@ -15,4 +15,6 @@
     <string name="item_type_mobile">Mobile</string>
     <string name="item_type_other">Other</string>
     <string name="supp_phone_prefix">+44</string>
+    <string name="item_saved_toast">New item saved. New item ID:</string>
+    <string name="save_failed_toast">Failed to save new item</string>
 </resources>
