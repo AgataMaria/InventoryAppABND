@@ -101,7 +101,7 @@ public class InventoryProvider extends ContentProvider {
     // Helper method for the insert() method
     private Uri insertItem(Uri uri, ContentValues values){
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
-long id = db.insert(TABLE_NAME, null, values);
+        long id = db.insert(TABLE_NAME, null, values);
         if (id == -1) {
             Log.e("ContentProvider", "Failed to insert row for " + uri);
             return null;}
