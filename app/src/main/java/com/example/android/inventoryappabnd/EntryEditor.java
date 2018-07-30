@@ -98,7 +98,7 @@ public class EntryEditor extends AppCompatActivity {
         String itemPrice = String.valueOf(Double.parseDouble(mItemPriceET.getText().toString().trim()));
         String itemQnt = String.valueOf(Integer.parseInt(mItemQntET.getText().toString().trim()));
         String itemSuppName = mItemSuppNameET.getText().toString().trim();
-        String itemSuppNo = String.valueOf(Integer.parseInt(mItemSuppNoET.getText().toString().trim()));
+        String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
         // assign input values to table columns
         cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);

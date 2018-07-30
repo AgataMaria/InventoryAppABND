@@ -26,9 +26,9 @@ public class DBHelperClass extends SQLiteOpenHelper {
                 + InventoryEntry.COLUMN_ITEM_TYPE + " INTEGER NOT NULL, "
                 + InventoryEntry.COLUMN_ITEM_NAME + " TEXT NOT NULL, "
                 + InventoryEntry.COLUMN_ITEM_PRICE + " INTEGER NOT NULL, "
-                + InventoryEntry.COLUMN_ITEM_QNT + " INTEGER NOT NULL, "
-                + InventoryEntry.COLUMN_ITEM_SUPP_NAME + " TEXT NOT NULL, "
-                + InventoryEntry.COLUMN_ITEM_SUPP_NO + " LONG NOT NULL);";
+                + InventoryEntry.COLUMN_ITEM_QNT + " INTEGER, "
+                + InventoryEntry.COLUMN_ITEM_SUPP_NAME + " TEXT,"
+                + InventoryEntry.COLUMN_ITEM_SUPP_NO + " TEXT);";
 
         db.execSQL(SQL_CREATE_TABLE);
         Log.v("helper class", SQL_CREATE_TABLE);
