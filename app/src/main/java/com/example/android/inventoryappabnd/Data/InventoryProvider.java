@@ -121,9 +121,10 @@ public class InventoryProvider extends ContentProvider {
             case INVENTORY:
                 return InventoryEntry.CONTENT_DIR_TYPE;
             case INVENTORY_ROW_ID:
-                return InventoryEntry.CONTENT_ITEM_TYPE;
-                default:
-                    throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+                return InventoryEntry.CONTENT_ITEM_MIME_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     // Helper method for the insert() method
