@@ -61,16 +61,16 @@ public class InventoryProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         SQLiteDatabase db = myDbHelper.getReadableDatabase();
-        Cursor cursor = null;
+        Cursor cursor;
         int match = sUriMatcher.match(uri);
         switch (match) {
             case INVENTORY:
-                db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+                cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
                 break;
             case INVENTORY_ROW_ID:
                 selection = InventoryEntry._ID;
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+                cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
                 break;
             default:
                 throw new IllegalArgumentException("Cannot resolve this URI query" + uri);

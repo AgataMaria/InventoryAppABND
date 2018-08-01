@@ -4,12 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InventoryActivity">
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal">
     <TextView
-        android:id="@+id/tv_main_summary"
+        android:id="@+id/empty_state_view_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/space_small" />
+       style="@style/EmptyStateTextView"/>
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview"

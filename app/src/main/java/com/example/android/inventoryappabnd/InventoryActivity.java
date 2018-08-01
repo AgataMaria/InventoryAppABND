@@ -29,6 +29,7 @@ public class InventoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         showDbInfo();
     }
 
@@ -60,9 +61,14 @@ public class InventoryActivity extends AppCompatActivity {
         // cursor to return db query - this one shows all info from the database
         Cursor cursor = getContentResolver().query(InventoryEntry.CONTENT_URI, projection, null, null, null);
 
-        ListView inventoryListView = findViewById(R.id.listview);
-        InventoryCursorAdapter adapter = new InventoryCursorAdapter(this, cursor);
-        inventoryListView.setAdapter(adapter);
+        if (cursor != null) {
+            ListView inventoryListView = findViewById(R.id.listview);
+            InventoryCursorAdapter adapter = new InventoryCursorAdapter(this, cursor);
+            inventoryListView.setAdapter(adapter);
+        } else {
+            TextView emptyStateView = findViewById(R.id.empty_state_view_tv);
+            emptyStateView.setText(R.string.empty_state_textview_text);
+        }
 
     }
 

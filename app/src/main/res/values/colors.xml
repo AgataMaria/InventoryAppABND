@@ -4,7 +4,7 @@
     <color name="colorPrimary">#542436</color>
     <color name="colorAccent">#824e60</color>
     <color name="colorPrimaryDark">#2a0010</color>
-    <color name="primaryTextColor">#ffffff</color>
+    <color name="emptyStateColorText">#8b8589</color>
     <color name="editorColorPrimary">#78A489</color>
     <color name="editorColorPrimaryDark">#40664D</color>
 </resources>
