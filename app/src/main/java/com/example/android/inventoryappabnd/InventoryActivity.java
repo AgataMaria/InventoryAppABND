@@ -1,16 +1,21 @@
 package com.example.android.inventoryappabnd;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.android.inventoryappabnd.Data.InventoryContract;
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 import com.example.android.inventoryappabnd.Data.InventoryCursorAdapter;
 
@@ -38,9 +43,24 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         //setup a ListView to be populated with data from the loaded cursor
         ListView inventoryListView = findViewById(R.id.listview);
         adapter = new InventoryCursorAdapter(this, null);
+        //set adapter to the ListView and set an OnItemClickListener on the adapter
         inventoryListView.setAdapter(adapter);
+        inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get the selected item content uri by appending base content uri with the ListView item id from the adapter
+                Uri selectedItemUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, id);
+                Intent editorEditModeIntent = new Intent(InventoryActivity.this, EntryEditor.class);
+                //check the value of the uri
+                Log.v("item uri: ", String.valueOf(selectedItemUri));
+                //pass the uri to the EntryEditor activity and start activity
+                editorEditModeIntent.setData(selectedItemUri);
+                startActivity(editorEditModeIntent);
+            }
+        });
 
-        //initiate the Loader when the Activity is created
+
+        //initialise the Loader when the Activity is created
         getLoaderManager().initLoader(INVENTORY_LOADER_ID, null, this);
     }
 

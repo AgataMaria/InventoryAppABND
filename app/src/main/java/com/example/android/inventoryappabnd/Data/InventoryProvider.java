@@ -75,6 +75,8 @@ public class InventoryProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cannot resolve this URI query" + uri);
         }
+        //listen for uri changes from the Content Resolver and update the cursor accordingly
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -98,19 +100,28 @@ public class InventoryProvider extends ContentProvider {
     //delete
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        int deletedRowId;
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
         int match = sUriMatcher.match(uri);
         switch (match) {
             case INVENTORY:
-                return db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                deletedRowId = db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             case INVENTORY_ROW_ID:
                 selection = InventoryEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                deletedRowId = db.delete(InventoryEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("You cannot delete: ");
         }
+        // notify any listeners of changes to the uri
+        if (deletedRowId != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return deletedRowId;
     }
+
 
     //getType
     @Nullable
@@ -152,6 +163,8 @@ public class InventoryProvider extends ContentProvider {
             Log.e("ContentProvider", "Failed to insert row for " + uri);
             return null;
         }
+        //notify listeners that content uri has been updated
+        getContext().getContentResolver().notifyChange(uri, null);
         return ContentUris.withAppendedId(uri, id);
     }
 

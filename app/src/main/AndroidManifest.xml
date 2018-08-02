@@ -16,7 +16,6 @@ package="com.example.android.inventoryappabnd">
         </intent-filter>
     </activity>
     <activity android:name="com.example.android.inventoryappabnd.EntryEditor"
-    android:label="@string/editor_activity_label"
     android:theme="@style/EntryEditorTheme"
     android:parentActivityName=".InventoryActivity" >
     <!-- Parent activity meta-data to support 4.0 and lower -->
