@@ -15,24 +15,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.android.inventoryappabnd.Data.InventoryContract;
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 import com.example.android.inventoryappabnd.Data.InventoryCursorAdapter;
 
 public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    // ID for the inventoryCursorLoader
+
+    /*
+    Variables
+     */
     public static final int INVENTORY_LOADER_ID = 0;
     InventoryCursorAdapter adapter;
 
+    /*
+    Lifecycle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
         //setup a FAB to open Entry Activity, which allows to add items to the Inventory
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton addFab = findViewById(R.id.fab);
+        addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(InventoryActivity.this, EntryEditor.class);
@@ -59,7 +64,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
             }
         });
 
-
         //initialise the Loader when the Activity is created
         getLoaderManager().initLoader(INVENTORY_LOADER_ID, null, this);
     }
@@ -74,7 +78,9 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         super.onResume();
     }
 
-    // methods required by the LoaderManager
+    /*
+    Methods required by the LoaderManager
+     */
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
 
@@ -108,7 +114,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
         adapter.swapCursor(data);
     }
 

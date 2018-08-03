@@ -27,22 +27,27 @@ import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntr
 
 public class EntryEditor extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int EDITOR_LOADER_ID = 1;
-    private Uri currentItemUri;
-    private String TABLE_COLUMNS_SEPARATOR = " | ";
 
-    // Entry editor form fields elements
-
+    /*
+    Entry editor form fields elements
+     */
     private Spinner mItemTypeSpinner;
     private EditText mItemNameET;
     private EditText mItemPriceET;
     private EditText mItemQntET;
     private EditText mItemSuppNameET;
     private EditText mItemSuppNoET;
-
-    // Item type variable
+    /*
+    Variables
+     */
+    public static final int EDITOR_LOADER_ID = 1;
+    private Uri currentItemUri;
+    private String TABLE_COLUMNS_SEPARATOR = " | ";
     private int mItemTypeValue = InventoryEntry.ITEM_TYPE_PC;
 
+    /*
+    Lifecycle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,9 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         setupSpinner();
     }
 
+    /*
+    Helper method to set up the item type spinner
+     */
     private void setupSpinner() {
         // Create adapter for spinner to use with the values from the array resource
         ArrayAdapter mSpinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -115,8 +123,12 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         });
     }
 
-    //ADD MODE - insert method for the editor
-    private void insertItem() {
+    /*
+     * DB operations methods
+     * ADD MODE - inserts a new row to the db
+     * EDIT MODE - updates an existing row in the db
+     */
+    private void saveItem() {
         ContentValues cv = new ContentValues();
 
         // get input values from the editor form fields
@@ -148,7 +160,9 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         }
     }
 
-    //EDIT MODE - methods required by the Loader Manager
+    /*
+    EDIT MODE - methods required by the Loader Manager
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
@@ -228,8 +242,8 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                     break;
                 case InventoryEntry.ITEM_TYPE_OTHER:
                     mItemTypeSpinner.setSelection(5);
-                    default:
-                //ITEM_TYPE_PC
+                default:
+                    //ITEM_TYPE_PC
                     mItemTypeSpinner.setSelection(0);
             }
 
@@ -244,11 +258,13 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-loader.reset();
+        loader.reset();
 
     }
 
-    //MENU methods
+    /*
+    MENU methods
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.editor_menu, menu);
@@ -261,7 +277,7 @@ loader.reset();
             // Respond to a click on the "Save" menu option
             case R.id.editor_menu_action_save:
 
-                insertItem();
+                saveItem();
                 finish();
 
             case android.R.id.home:

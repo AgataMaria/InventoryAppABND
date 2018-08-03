@@ -34,7 +34,9 @@ public class InventoryProvider extends ContentProvider {
         sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_INVENTORY_TABLE + "/#", INVENTORY_ROW_ID);
     }
 
-    //methods required by the ContentProvider
+    /*
+    methods required by the ContentProvider
+     */
     //onCreate
     @Override
     public boolean onCreate() {
@@ -42,7 +44,7 @@ public class InventoryProvider extends ContentProvider {
         return true;
     }
 
-    //create
+    //CREATE
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
@@ -55,7 +57,7 @@ public class InventoryProvider extends ContentProvider {
         }
     }
 
-    //read
+    //READ
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
@@ -80,7 +82,7 @@ public class InventoryProvider extends ContentProvider {
         return cursor;
     }
 
-    //update
+    //UPDATE
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         int match = sUriMatcher.match(uri);
@@ -97,7 +99,7 @@ public class InventoryProvider extends ContentProvider {
     }
 
 
-    //delete
+    //DELETE
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         int deletedRowId;
@@ -138,7 +140,9 @@ public class InventoryProvider extends ContentProvider {
         }
     }
 
-    // Helper method for the insert() method
+    /*
+     Helper method for the insert() method
+      */
     private Uri insertItem(Uri uri, ContentValues values) {
         //check content values entered by the user before accessing the database
         String itemName = values.getAsString(InventoryEntry.COLUMN_ITEM_NAME);
@@ -168,7 +172,9 @@ public class InventoryProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
-    // helper method for the update() method
+    /*
+     helper method for the update() method
+      */
     private int updateItem(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
         //check content values entered by the user before accessing the database

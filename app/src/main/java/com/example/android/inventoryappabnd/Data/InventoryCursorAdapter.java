@@ -12,16 +12,20 @@ import com.example.android.inventoryappabnd.R;
 
 public class InventoryCursorAdapter extends CursorAdapter {
 
-    //constructor
+    //Constructor
     public InventoryCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
 
+    //Method required by the CursorAdapter - dont need to check if view is null as the class
+    //takes care of it - newView inflates view from the chosen layout source
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
     }
 
+    //Method required by the CursorAdapter - set elements of the view
+    //find elements, read data from the db and assgn it to tbe view elements
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView itemTypeTV = view.findViewById(R.id.item_type_tv);
@@ -45,8 +49,5 @@ public class InventoryCursorAdapter extends CursorAdapter {
         itemSuppTV.setText(itemSupp);
         itemSuppNoTV.setText(itemSuppNo);
 
-
-        // read data from the cursor
-        // bind data to textviews
     }
 }
