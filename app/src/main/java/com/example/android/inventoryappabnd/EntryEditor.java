@@ -61,8 +61,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         } else {
             setTitle(getString(R.string.editor_activity_edit_mode_label));
             //initialise the Loader when the Activity is created in the Edit Mode
-            getLoaderManager().initLoader(EDITOR_LOADER_ID, null, null);
-            ;
+            getLoaderManager().initLoader(EDITOR_LOADER_ID, null, this);
         }
 
         // Assign editor forms elements to views by ID and set up hints for EditText fields
@@ -245,6 +244,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+loader.reset();
 
     }
 
