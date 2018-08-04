@@ -56,7 +56,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         //get intent from the InventoryActivity with the selected item uri to use in Edit Mode
         //store the uri in selectedItemUri variable
         Intent editorEditModeIntent = getIntent();
-        Uri currentItemUri = editorEditModeIntent.getData();
+        currentItemUri = editorEditModeIntent.getData();
 
         //Change between Edit Mode and Add Mode depending on which intent started the activity
         //if the activity was started through the Add button the selectedItemUri will be null
@@ -138,13 +138,14 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         String itemSuppName = mItemSuppNameET.getText().toString().trim();
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
-        // Check that its in Add Mode and if editor form fields havent been completed
-        if (currentItemUri == null &&
+        // Check that its in Add Mode and if editor form fields haven't been completed
+       if (currentItemUri == null &&
                 TextUtils.isEmpty(itemName) &&
                 TextUtils.isEmpty(itemPrice) &&
                 TextUtils.isEmpty(itemQnt) &&
                 TextUtils.isEmpty(itemSuppName) &&
-                TextUtils.isEmpty(itemSuppNo)) {
+                TextUtils.isEmpty(itemSuppNo) &&
+        mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
             //nothing inserted so return
             return;
         }
@@ -174,13 +175,13 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             }
 
         } else {
-            int updatedRow = getContentResolver().update(InventoryEntry.CONTENT_URI, cv, null, null);
+            int updatedRows = getContentResolver().update(InventoryEntry.CONTENT_URI, cv, null, null);
             // if successfully updated
-            if (updatedRow == 0) {
+            if (updatedRows == 0) {
                 Toast.makeText(this, R.string.item_update_failed_toast, Toast.LENGTH_LONG).show();
             } else {
                 // check the value of the updated row's address
-                Log.v("Edit mode - ", "updated rows " + updatedRow);
+                Log.v("Edit mode - ", "updated rows " + updatedRows);
                 // display a toast message confirming successful entry
                 Toast.makeText(this, R.string.item_updated_toast, Toast.LENGTH_LONG).show();
             }
@@ -224,6 +225,10 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor loaderCursor) {
+        //if cursor is null / no rows then just return
+        if (loaderCursor == null || loaderCursor.getCount() < 1) {
+            return;
+        }
         //move the cursor to the first position and get column index numbers
         if (loaderCursor.moveToFirst()) {
             int idColumnIndex = loaderCursor.getColumnIndex(InventoryEntry._ID);
@@ -276,8 +281,8 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
             //update the textview fields in the list items layout with data returned
             mItemNameET.setText(itemName);
-            mItemPriceET.setText(itemPrice);
-            mItemQntET.setText(itemQnt);
+            mItemPriceET.setText(Integer.toString(itemPrice));
+            mItemQntET.setText(Integer.toString(itemQnt));
             mItemSuppNameET.setText(itemSuppName);
             mItemSuppNoET.setText(itemSuppNo);
         }

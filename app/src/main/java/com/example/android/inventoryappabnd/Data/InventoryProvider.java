@@ -70,7 +70,7 @@ public class InventoryProvider extends ContentProvider {
                 cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
                 break;
             case INVENTORY_ROW_ID:
-                selection = InventoryEntry._ID;
+                selection = InventoryEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = db.query(InventoryEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
                 break;
