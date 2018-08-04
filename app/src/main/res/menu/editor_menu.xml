@@ -5,4 +5,8 @@
         android:id="@+id/editor_menu_action_save"
         app:showAsAction="always"
         />
+    <item android:title="Delete"
+        android:id="@+id/editor_menu_action_delete"
+        app:showAsAction="always"
+        />
 </menu>

@@ -27,7 +27,6 @@ import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntr
 
 public class EntryEditor extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-
     /*
     Entry editor form fields elements
      */
@@ -37,6 +36,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     private EditText mItemQntET;
     private EditText mItemSuppNameET;
     private EditText mItemSuppNoET;
+
     /*
     Variables
      */
@@ -56,12 +56,12 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         //get intent from the InventoryActivity with the selected item uri to use in Edit Mode
         //store the uri in selectedItemUri variable
         Intent editorEditModeIntent = getIntent();
-        Uri selectedItemUri = editorEditModeIntent.getData();
+        Uri currentItemUri = editorEditModeIntent.getData();
 
         //Change between Edit Mode and Add Mode depending on which intent started the activity
         //if the activity was started through the Add button the selectedItemUri will be null
         //if the activity was started from clicking on the item start the activity in Edit Mode
-        if (selectedItemUri == null) {
+        if (currentItemUri == null) {
             setTitle(getString(R.string.editor_activity_add_mode_label));
         } else {
             setTitle(getString(R.string.editor_activity_edit_mode_label));
@@ -124,7 +124,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     }
 
     /*
-     * DB operations methods
+     * DB operations method
      * ADD MODE - inserts a new row to the db
      * EDIT MODE - updates an existing row in the db
      */
@@ -138,7 +138,18 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         String itemSuppName = mItemSuppNameET.getText().toString().trim();
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
-        // assign input values to table columns
+        // Check that its in Add Mode and if editor form fields havent been completed
+        if (currentItemUri == null &&
+                TextUtils.isEmpty(itemName) &&
+                TextUtils.isEmpty(itemPrice) &&
+                TextUtils.isEmpty(itemQnt) &&
+                TextUtils.isEmpty(itemSuppName) &&
+                TextUtils.isEmpty(itemSuppNo)) {
+            //nothing inserted so return
+            return;
+        }
+
+        // otherwise assign input values to table columns
         cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
         cv.put(InventoryEntry.COLUMN_ITEM_NAME, itemName);
         cv.put(InventoryEntry.COLUMN_ITEM_PRICE, itemPrice);
@@ -146,17 +157,33 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NAME, itemSuppName);
         cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo);
 
+        //Check if its in Add or Edit Mode
+        //In Add Mode get a new row Uri and in Edit Mode get a number of updated rows
         // insert assigned columns + their values to table
-        Uri newRowUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, cv);
 
-        // check value of the editor input
-        Log.v("Editor entry value", "new row" + newRowUri);
+        if (currentItemUri == null) {
+            Uri newRowUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, cv);
+            // check the value of the new row's address
+            Log.v("Add mode - ", "new row uri" + newRowUri);
 
-        // display a toast message confirming successful or unsuccessful entry
-        if (newRowUri == null) {
-            Toast.makeText(this, R.string.save_failed_toast, Toast.LENGTH_LONG).show();
+            // display a toast message confirming successful or unsuccessful entry
+            if (newRowUri == null) {
+                Toast.makeText(this, R.string.save_failed_toast, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, getString(R.string.item_saved_toast) + newRowUri, Toast.LENGTH_LONG).show();
+            }
+
         } else {
-            Toast.makeText(this, getString(R.string.item_saved_toast) + newRowUri, Toast.LENGTH_LONG).show();
+            int updatedRow = getContentResolver().update(InventoryEntry.CONTENT_URI, cv, null, null);
+            // if successfully updated
+            if (updatedRow == 0) {
+                Toast.makeText(this, R.string.item_update_failed_toast, Toast.LENGTH_LONG).show();
+            } else {
+                // check the value of the updated row's address
+                Log.v("Edit mode - ", "updated rows " + updatedRow);
+                // display a toast message confirming successful entry
+                Toast.makeText(this, R.string.item_updated_toast, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -197,7 +224,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor loaderCursor) {
-        //move cursor to first position and get column index numbers
+        //move the cursor to the first position and get column index numbers
         if (loaderCursor.moveToFirst()) {
             int idColumnIndex = loaderCursor.getColumnIndex(InventoryEntry._ID);
             int itemTypeColumnIndex = loaderCursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_TYPE);
@@ -271,14 +298,29 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // check if in Add mode and if so hide the delete option
+        if (currentItemUri == null) {
+            MenuItem mi = menu.findItem(R.id.editor_menu_action_delete);
+            mi.setVisible(false);
+        }
+        return true;
+    }
+
+
     // Set Editor menu options item selected behaviour
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             // Respond to a click on the "Save" menu option
             case R.id.editor_menu_action_save:
-
                 saveItem();
                 finish();
+
+            case R.id.editor_menu_action_delete:
+                //TODO: complete the delete function
 
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);

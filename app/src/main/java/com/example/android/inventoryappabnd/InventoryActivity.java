@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 import com.example.android.inventoryappabnd.Data.InventoryCursorAdapter;
@@ -25,7 +26,8 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     Variables
      */
     public static final int INVENTORY_LOADER_ID = 0;
-    InventoryCursorAdapter adapter;
+    private InventoryCursorAdapter adapter;
+    private TextView emptyStateTV;
 
     /*
     Lifecycle
@@ -45,8 +47,13 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
             }
         });
 
+        //setup an empty state view
+        emptyStateTV = findViewById(R.id.empty_state_view_tv);
+
+
         //setup a ListView to be populated with data from the loaded cursor
         ListView inventoryListView = findViewById(R.id.listview);
+        inventoryListView.setEmptyView(emptyStateTV);
         adapter = new InventoryCursorAdapter(this, null);
         //set adapter to the ListView and set an OnItemClickListener on the adapter
         inventoryListView.setAdapter(adapter);
@@ -114,13 +121,14 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        emptyStateTV.setText(R.string.empty_state_textview_text);
         adapter.swapCursor(data);
-    }
+        }
+
 
     @Override
     public void onLoaderReset(Loader loader) {
         adapter.swapCursor(null);
-
     }
 }
 
