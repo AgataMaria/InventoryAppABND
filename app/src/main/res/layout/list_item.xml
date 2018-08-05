@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_marginTop="@dimen/space_medium"
     android:layout_marginLeft="@dimen/space_large"
     android:layout_marginRight="@dimen/space_large"
@@ -21,7 +20,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/space_medium">
 
         <TextView
             android:id="@+id/item_type_tv"
@@ -73,7 +73,8 @@
             android:layout_weight="3"
             android:gravity="center"
             android:textSize="@dimen/text_medium"
-            tools:text="24,89" />
+            tools:text="24,89"
+           android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -106,8 +107,7 @@
                 android:layout_height="match_parent"
                 android:textSize="@dimen/text_small"
                 tools:text="2"
-                android:layout_margin="@dimen/text_small"
-                />
+               android:padding="@dimen/space_small" />
 
         </LinearLayout>
     </LinearLayout>

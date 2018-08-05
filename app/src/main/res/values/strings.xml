@@ -21,4 +21,7 @@
     <string name="item_updated_toast">Your item has been updated.</string>
     <string name="item_update_failed_toast">This item has not been updated.</string>
     <string name="empty_state_textview_text">You have no items in stock.</string>
+    <string name="unsaved_changes_warning">You have unsaved changes. Are you sure you want to quit</string>
+    <string name="unsaved_changes_discard">Discard changes</string>
+    <string name="unsaved_changes_keep_editing">Keep editing</string>
 </resources>

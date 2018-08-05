@@ -1,8 +1,10 @@
 package com.example.android.inventoryappabnd;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -74,6 +76,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         //if the activity was started from clicking on the item start the activity in Edit Mode
         if (currentItemUri == null) {
             setTitle(getString(R.string.editor_activity_add_mode_label));
+            invalidateOptionsMenu();
         } else {
             setTitle(getString(R.string.editor_activity_edit_mode_label));
             //initialise the Loader when the Activity is created in the Edit Mode
@@ -81,15 +84,21 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         }
 
         // Assign editor forms elements to views by ID and set up hints for EditText fields
+        //attached onTouchListeners and set any hints / apply visual changes
         mItemTypeSpinner = findViewById(R.id.entry1_spinner);
+        mItemTypeSpinner.setOnTouchListener(mTouchListener);
         mItemNameET = findViewById(R.id.entry2_et);
+        mItemNameET.setOnTouchListener(mTouchListener);
         mItemPriceET = findViewById(R.id.entry3_et);
+        mItemPriceET.setOnTouchListener(mTouchListener);
         mItemPriceET.setHint(Html.fromHtml(
                 "<small>" + getString(R.string.entry_prc_hint) + "</small>"));
         mItemQntET = findViewById(R.id.entry4_et);
+        mItemQntET.setOnTouchListener(mTouchListener);
         mItemSuppNameET = findViewById(R.id.entry5_et);
+        mItemSuppNameET.setOnTouchListener(mTouchListener);
         mItemSuppNoET = findViewById(R.id.entry6_et);
-
+        mItemSuppNoET.setOnTouchListener(mTouchListener);
         setupSpinner();
     }
 
@@ -150,13 +159,13 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
         // Check that its in Add Mode and if editor form fields haven't been completed
-       if (currentItemUri == null &&
+        if (currentItemUri == null &&
                 TextUtils.isEmpty(itemName) &&
                 TextUtils.isEmpty(itemPrice) &&
                 TextUtils.isEmpty(itemQnt) &&
                 TextUtils.isEmpty(itemSuppName) &&
                 TextUtils.isEmpty(itemSuppNo) &&
-        mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
+                mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
             //nothing inserted so return
             return;
         }
@@ -305,7 +314,34 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     }
 
     /*
-    MENU methods
+    Method for the Unsaved Changed warning
+     */
+    private void showUnsavedChangesWarning(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_warning);
+        builder.setPositiveButton(R.string.unsaved_changes_discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.unsaved_changes_keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /*
+    Method for the Deletion warning
+     */
+    //private void showDeletionWarning()
+    //TO COMPLETE
+
+    /*
+    MENU and NAVIGATION
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -324,7 +360,6 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         return true;
     }
 
-
     // Set Editor menu options item selected behaviour
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -338,9 +373,38 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                 //TODO: complete the delete function
 
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
+                if (!itemHasChanged) {
+                    NavUtils.navigateUpFromSameTask(this);
+                    return true;
+                }
+                    DialogInterface.OnClickListener discardButtonClickListener =
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    NavUtils.navigateUpFromSameTask(EntryEditor.this);
+                                }
+                            };
+                    showUnsavedChangesWarning(discardButtonClickListener);
+                    return true;
+                }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!itemHasChanged) {
+            super.onBackPressed();
+            return;
+        } else {
+            DialogInterface.OnClickListener discardButtonClickListener =
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    };
+            showUnsavedChangesWarning(discardButtonClickListener);
+        }
     }
 }
