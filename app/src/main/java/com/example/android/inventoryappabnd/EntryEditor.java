@@ -291,7 +291,6 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         loader.reset();
-
     }
 
     /*

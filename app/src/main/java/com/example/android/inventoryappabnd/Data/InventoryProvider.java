@@ -158,6 +158,16 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Must specify item quantity");
         }
 
+        String suppName = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NAME);
+        if (suppName == null) {
+            throw new IllegalArgumentException("Must specify supplier name");
+        }
+
+        String suppNo = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NO);
+        if (suppNo == null) {
+            throw new IllegalArgumentException("Must specify supplier's telephone number");
+        }
+
         // get a database instance
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
