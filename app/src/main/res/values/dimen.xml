@@ -4,8 +4,10 @@
     <dimen name="space_medium">10dp</dimen>
     <dimen name="space_large">16dp</dimen>
     <dimen name="text_hint">12sp</dimen>
-    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_tiny">10sp</dimen>
+    <dimen name="text_small">14sp</dimen>
     <dimen name="text_medium">22sp</dimen>
     <dimen name="spinner_height">48dp</dimen>
     <dimen name="empty_view_text_size">24sp</dimen>
+    <dimen name="list_item_min_height">100dp</dimen>
 </resources>

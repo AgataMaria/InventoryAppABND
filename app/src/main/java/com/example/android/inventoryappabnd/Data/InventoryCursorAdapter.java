@@ -33,7 +33,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView itemQntTV = view.findViewById(R.id.item_qnt_tv);
         TextView itemPriceTV = view.findViewById(R.id.item_price_tv);
         TextView itemSuppTV = view.findViewById(R.id.item_supp_tv);
-        TextView itemSuppNoTV = view.findViewById(R.id.item_suppno_tv);
 
         String itemType = String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_TYPE)));
         String itemName = cursor.getString(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME));
@@ -45,9 +44,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         itemTypeTV.setText(itemType);
         itemNameTV.setText(itemName);
         itemQntTV.setText(String.valueOf(itemQnt));
-        itemPriceTV.setText(String.valueOf(itemPrice));
-        itemSuppTV.setText(itemSupp);
-        itemSuppNoTV.setText(itemSuppNo);
-
+        itemPriceTV.setText("£" + String.valueOf(itemPrice));
+        itemSuppTV.setText(itemSupp + "\n"+ "+44" + itemSuppNo);
     }
 }

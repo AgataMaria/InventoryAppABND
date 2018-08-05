@@ -1,42 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants" >
-
-<TextView
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item_type_tv"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    android:id="@+id/item_name_tv"/>
+    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/space_medium"
+    android:layout_marginLeft="@dimen/space_large"
+    android:layout_marginRight="@dimen/space_large"
+    android:layout_marginBottom="@dimen/space_medium"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/listViewItemBackground"
+    android:descendantFocusability="blocksDescendants"
+    android:minHeight="@dimen/list_item_min_height"
+    android:orientation="horizontal">
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="5"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/item_type_tv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/item_qnt_tv"/>
+            tools:text="Monitor" />
+
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/item_name_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            tools:text="Hanns G HL225 22 inch Widescreen LED Monitor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/item_price_tv"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/item_supp_tv"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/item_suppno_tv"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_tiny"
+                android:text="Supplier details: " />
+
+            <TextView
+                android:id="@+id/item_supp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_small"
+                tools:text="HANNS.G \n +44098769" />
+
+        </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/space_medium">
+
+        <TextView
+            android:id="@+id/item_price_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="@dimen/text_medium"
+            tools:text="24,89" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@drawable/layout_round"
+            android:text="SELL"
+            android:clickable="true"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/space_small"
+            android:layout_marginRight="@dimen/space_small"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/space_small"
+                android:textSize="@dimen/text_small"
+                android:text="Qty: " />
+
+            <TextView
+                android:id="@+id/item_qnt_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_small"
+                tools:text="2"
+                android:layout_margin="@dimen/text_small"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
 </LinearLayout>

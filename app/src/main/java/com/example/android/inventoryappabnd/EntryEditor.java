@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,16 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     private Uri currentItemUri;
     private String TABLE_COLUMNS_SEPARATOR = " | ";
     private int mItemTypeValue = InventoryEntry.ITEM_TYPE_PC;
+    private boolean itemHasChanged = false;
+    //listener associated with itemHasChanged boolean - checks if the user tried to edit fields
+    // needs attaching to all form fields
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            itemHasChanged = true;
+            return false;
+        }
+    };
 
     /*
     Lifecycle

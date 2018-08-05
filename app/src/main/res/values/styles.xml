@@ -34,12 +34,20 @@
 
     <!-- Style for the Empty View TextView in the Inventory Activity -->
     <style name="EmptyStateTextView">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/empty_view_text_size</item>
         <item name="android:textColor">@color/emptyStateColorText</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/lobster_regular</item>
+        <item name="android:background">@color/emptyStateColorBackground</item>
+        </style>
+    <!-- Style for the FAB button in the Inventory Activity -->
+    <style name="FabStyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_margin">@dimen/space_medium</item>
     </style>
-
 </resources>
