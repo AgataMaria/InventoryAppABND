@@ -42,13 +42,39 @@
         <item name="android:fontFamily">@font/lobster_regular</item>
         <item name="android:background">@color/emptyStateColorBackground</item>
         <item name="android:padding">@dimen/space_small</item>
-        </style>
+    </style>
     <!-- Style for the FAB button in the Inventory Activity -->
     <style name="FabStyle">
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_margin">@dimen/space_medium</item>
+    </style>
+    <!-- Style for the sale button -->
+    <style name="saleButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">2</item>
+        <item name="android:background">@drawable/layout_round</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">@dimen/space_small</item>
+        <item name="android:layout_marginRight">@dimen/space_small</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+    <!-- Style for the views container layout in listview item -->
+    <style name="listViewContainerStyle">
+        <item name="android:layout_marginTop">@dimen/space_medium</item>
+        <item name="android:layout_marginLeft">@dimen/space_large</item>
+        <item name="android:layout_marginRight">@dimen/space_large</item>
+        <item name="android:layout_marginBottom">@dimen/space_medium</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/listViewItemBackground</item>
+        <item name="android:descendantFocusability">blocksDescendants</item>
+        <item name="android:minHeight">@dimen/list_item_min_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:baselineAligned">false</item>
     </style>
 </resources>

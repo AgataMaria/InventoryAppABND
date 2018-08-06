@@ -76,6 +76,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         //if the activity was started from clicking on the item start the activity in Edit Mode
         if (currentItemUri == null) {
             setTitle(getString(R.string.editor_activity_add_mode_label));
+            //redraw the menu
             invalidateOptionsMenu();
         } else {
             setTitle(getString(R.string.editor_activity_edit_mode_label));
@@ -89,6 +90,8 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         mItemTypeSpinner.setOnTouchListener(mTouchListener);
         mItemNameET = findViewById(R.id.entry2_et);
         mItemNameET.setOnTouchListener(mTouchListener);
+        //Check if the listener works
+        Log.v("touchlistener item name", String.valueOf(itemHasChanged));
         mItemPriceET = findViewById(R.id.entry3_et);
         mItemPriceET.setOnTouchListener(mTouchListener);
         mItemPriceET.setHint(Html.fromHtml(
@@ -158,7 +161,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         String itemSuppName = mItemSuppNameET.getText().toString().trim();
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
-        // Check that its in Add Mode and if editor form fields haven't been completed
+        // Check that its in Add Mode and make sure the form fields haven't been completed
         if (currentItemUri == null &&
                 TextUtils.isEmpty(itemName) &&
                 TextUtils.isEmpty(itemPrice) &&
@@ -195,10 +198,10 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             }
 
         } else {
-            int updatedRows = getContentResolver().update(InventoryEntry.CONTENT_URI, cv, null, null);
+            int updatedRows = getContentResolver().update(currentItemUri, cv, null, null);
             // if successfully updated
             if (updatedRows == 0) {
-                Toast.makeText(this, R.string.item_update_failed_toast, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.update_failed_toast, Toast.LENGTH_LONG).show();
             } else {
                 // check the value of the updated row's address
                 Log.v("Edit mode - ", "updated rows " + updatedRows);
@@ -337,8 +340,44 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
     /*
     Method for the Deletion warning
      */
-    //private void showDeletionWarning()
-    //TO COMPLETE
+    private void showDeletionWarning() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.deletion_warning);
+        builder.setPositiveButton(R.string.deletion_confirm, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+            deleteItem();    //delete helper method in EntryEditor, not ContentProvider
+        }
+    });
+        builder.setNegativeButton(R.string.deletion_void, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                dialog.dismiss();
+            }
+        }
+    });
+    AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+}
+
+    /*
+    Deleting a single item from the database
+     */
+    private void deleteItem() {
+        // this should only be used in the Edit Mode so check that currentItemUri is not null
+        if (currentItemUri != null) {
+            //use the provider's delete() method through ContentResolver, specifying item's uri
+            int rowsDeleted = getContentResolver().delete(currentItemUri, null, null);
+            // display a toast message to confirm whether deletion was successful or not
+            if (rowsDeleted == 0) {
+                  Toast.makeText(this, R.string.delete_failed_toast,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.item_deleted_toast,
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
+    }
 
     /*
     MENU and NAVIGATION
@@ -370,7 +409,10 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                 finish();
 
             case R.id.editor_menu_action_delete:
-                //TODO: complete the delete function
+                //just show the dialogue window as it points to the deleteItem method anyway
+                //and also finishes
+                showDeletionWarning();
+                return true;
 
             case android.R.id.home:
                 if (!itemHasChanged) {

@@ -209,6 +209,20 @@ public class InventoryProvider extends ContentProvider {
             }
         }
 
+        if (values.containsKey(InventoryEntry.COLUMN_ITEM_SUPP_NAME)) {
+            String suppName = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NAME);
+            if (suppName == null || suppName.trim().length() == 0) {
+                throw new IllegalArgumentException("Cannot save an item with the supplier's details");
+            }
+        }
+
+        if (values.containsKey(InventoryEntry.COLUMN_ITEM_SUPP_NO)) {
+            String suppNo = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NO);
+            if (suppNo == null || suppNo.trim().length() == 0) {
+                throw new IllegalArgumentException("Cannot save an item with the supplier's details");
+            }
+        }
+
         // get a database instance
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
