@@ -31,4 +31,5 @@
     <string name="delete_failed_toast">This item could not be deleted.</string>
     <string name="sale_button_text">SELL</string>
     <string name="empty_fields_warning">Your item editor has empty fields.</string>
+    <string name="qnt_updated_toast">Item quantity updated.</string>
 </resources>
