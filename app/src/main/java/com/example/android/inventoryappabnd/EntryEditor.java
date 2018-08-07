@@ -187,8 +187,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                 TextUtils.isEmpty(itemPrice) ||
                 TextUtils.isEmpty(itemQnt) ||
                 TextUtils.isEmpty(itemSuppName) ||
-                TextUtils.isEmpty(itemSuppNo) ||
-                mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
+                TextUtils.isEmpty(itemSuppNo)) {
             Toast.makeText(this, R.string.empty_fields_warning,
                     Toast.LENGTH_LONG).show();
             } else {
