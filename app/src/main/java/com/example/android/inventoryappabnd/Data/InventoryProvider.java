@@ -150,21 +150,21 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Cannot save an item without a name");
         }
         Double itemPrice = values.getAsDouble(InventoryEntry.COLUMN_ITEM_PRICE);
-        if (itemPrice == null) {
-            throw new IllegalArgumentException("Cannot save an item without a price");
+        if (itemPrice == null|| itemPrice < 0) {
+            throw new IllegalArgumentException("Cannot save an item without a valid price");
         }
         Integer itemQnt = values.getAsInteger(InventoryEntry.COLUMN_ITEM_QNT);
-        if (itemQnt == null) {
+        if (itemQnt == null || itemQnt == 0) {
             throw new IllegalArgumentException("Must specify item quantity");
         }
 
         String suppName = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NAME);
-        if (suppName == null) {
+        if (suppName == null || suppName.trim().length() == 0) {
             throw new IllegalArgumentException("Must specify supplier name");
         }
 
         String suppNo = values.getAsString(InventoryEntry.COLUMN_ITEM_SUPP_NO);
-        if (suppNo == null) {
+        if (suppNo == null || suppNo.trim().length() == 0) {
             throw new IllegalArgumentException("Must specify supplier's telephone number");
         }
 
@@ -197,14 +197,14 @@ public class InventoryProvider extends ContentProvider {
 
         if (values.containsKey(InventoryEntry.COLUMN_ITEM_PRICE)) {
             Double itemPrice = values.getAsDouble(InventoryEntry.COLUMN_ITEM_PRICE);
-            if (itemPrice == null) {
+            if (itemPrice == null|| itemPrice < 0) {
                 throw new IllegalArgumentException("Cannot save an item without a price");
             }
         }
 
         if (values.containsKey(InventoryEntry.COLUMN_ITEM_QNT)) {
             Integer itemQnt = values.getAsInteger(InventoryEntry.COLUMN_ITEM_QNT);
-            if (itemQnt == null) {
+            if (itemQnt == null || itemQnt == 0) {
                 throw new IllegalArgumentException("Must specify item quantity");
             }
         }
