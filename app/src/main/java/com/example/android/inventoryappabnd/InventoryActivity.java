@@ -2,6 +2,7 @@ package com.example.android.inventoryappabnd;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 import com.example.android.inventoryappabnd.Data.InventoryCursorAdapter;
@@ -23,11 +25,12 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
 
     /*
-    Variables
+    Variables and elements
      */
     public static final int INVENTORY_LOADER_ID = 0;
     private InventoryCursorAdapter adapter;
     private TextView emptyStateTV;
+    private FloatingActionButton addFab;
 
     /*
     Lifecycle
@@ -38,7 +41,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
         setContentView(R.layout.activity_inventory);
 
         //setup a FAB to open Entry Activity, which allows to add items to the Inventory
-        FloatingActionButton addFab = findViewById(R.id.fab);
+        addFab = findViewById(R.id.fab);
         addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +52,6 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
         //setup an empty state view
         emptyStateTV = findViewById(R.id.empty_state_view_tv);
-
 
         //setup a ListView to be populated with data from the loaded cursor
         ListView inventoryListView = findViewById(R.id.listview);

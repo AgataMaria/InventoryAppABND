@@ -3,6 +3,7 @@ package com.example.android.inventoryappabnd.Data;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,5 +46,11 @@ public class InventoryCursorAdapter extends CursorAdapter {
         itemPriceTV.setText("£" + String.valueOf(itemPrice));
         itemSuppTV.setText(itemSupp);
         saleButtonTV.setText(R.string.sale_button_text);
+        saleButtonTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v("Button ", "Clicked");
+            }
+        });
     }
 }

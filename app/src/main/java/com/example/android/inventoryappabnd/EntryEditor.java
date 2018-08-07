@@ -162,12 +162,12 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
         // Check that its in Add Mode and make sure the form fields haven't been completed
-        if (currentItemUri == null &&
-                TextUtils.isEmpty(itemName) &&
-                TextUtils.isEmpty(itemPrice) &&
-                TextUtils.isEmpty(itemQnt) &&
-                TextUtils.isEmpty(itemSuppName) &&
-                TextUtils.isEmpty(itemSuppNo) &&
+        if (currentItemUri == null ||
+                TextUtils.isEmpty(itemName) ||
+                TextUtils.isEmpty(itemPrice) ||
+                TextUtils.isEmpty(itemQnt) ||
+                TextUtils.isEmpty(itemSuppName) ||
+                TextUtils.isEmpty(itemSuppNo) ||
                 mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
             //nothing inserted so return
             return;
@@ -266,7 +266,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             int id = loaderCursor.getInt(idColumnIndex);
             String itemType = String.valueOf(loaderCursor.getString(itemTypeColumnIndex));
             String itemName = loaderCursor.getString(itemNameColumnIndex);
-            int itemPrice = loaderCursor.getInt(itemPriceColumnIndex);
+            double itemPrice = loaderCursor.getDouble(itemPriceColumnIndex);
             int itemQnt = loaderCursor.getInt(itemQntColumnIndex);
             String itemSuppName = loaderCursor.getString(itemSuppNameColumnIndex);
             String itemSuppNo = loaderCursor.getString(itemSuppNoColumnIndex);
@@ -304,7 +304,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
             //update the textview fields in the list items layout with data returned
             mItemNameET.setText(itemName);
-            mItemPriceET.setText(Integer.toString(itemPrice));
+            mItemPriceET.setText(Double.toString(itemPrice));
             mItemQntET.setText(Integer.toString(itemQnt));
             mItemSuppNameET.setText(itemSuppName);
             mItemSuppNoET.setText(itemSuppNo);
@@ -407,6 +407,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             case R.id.editor_menu_action_save:
                 saveItem();
                 finish();
+                return true;
 
             case R.id.editor_menu_action_delete:
                 //just show the dialogue window as it points to the deleteItem method anyway
