@@ -156,30 +156,49 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
         // get input values from the editor form fields
         String itemName = mItemNameET.getText().toString().trim();
-        String itemPrice = String.valueOf(Double.parseDouble(mItemPriceET.getText().toString().trim()));
-        String itemQnt = String.valueOf(Integer.parseInt(mItemQntET.getText().toString().trim()));
+        String itemPrice;
+        itemPrice = mItemPriceET.getText().toString().trim();
+        if (TextUtils.isEmpty(itemPrice)) {
+            itemPrice = "0";
+        }
+        itemPrice = String.valueOf(Double.parseDouble(itemPrice));
+        String itemQnt;
+        itemQnt = mItemQntET.getText().toString().trim();
+        if (TextUtils.isEmpty(itemQnt)) {
+            itemQnt = "0";
+        }
         String itemSuppName = mItemSuppNameET.getText().toString().trim();
         String itemSuppNo = mItemSuppNoET.getText().toString().trim();
 
         // Check that its in Add Mode and make sure the form fields haven't been completed
-        if (currentItemUri == null ||
-                TextUtils.isEmpty(itemName) ||
-                TextUtils.isEmpty(itemPrice) ||
-                TextUtils.isEmpty(itemQnt) ||
-                TextUtils.isEmpty(itemSuppName) ||
-                TextUtils.isEmpty(itemSuppNo) ||
+        if (currentItemUri == null &&
+                TextUtils.isEmpty(itemName) &&
+                TextUtils.isEmpty(itemPrice) &&
+                TextUtils.isEmpty(itemQnt) &&
+                TextUtils.isEmpty(itemSuppName) &&
+                TextUtils.isEmpty(itemSuppNo) &&
                 mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
             //nothing inserted so return
             return;
         }
 
+        // Check if any of the form fields haven't been completed and if so, display a toast to warn the user
+        if (TextUtils.isEmpty(itemName) ||
+                TextUtils.isEmpty(itemPrice) ||
+                TextUtils.isEmpty(itemQnt) ||
+                TextUtils.isEmpty(itemSuppName) ||
+                TextUtils.isEmpty(itemSuppNo) ||
+                mItemTypeValue == InventoryEntry.ITEM_TYPE_PC) {
+            Toast.makeText(this, R.string.empty_fields_warning,
+                    Toast.LENGTH_LONG).show();
+            } else {
         // otherwise assign input values to table columns
         cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
         cv.put(InventoryEntry.COLUMN_ITEM_NAME, itemName);
         cv.put(InventoryEntry.COLUMN_ITEM_PRICE, itemPrice);
         cv.put(InventoryEntry.COLUMN_ITEM_QNT, itemQnt);
         cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NAME, itemSuppName);
-        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo);
+        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo); }
 
         //Check if its in Add or Edit Mode
         //In Add Mode get a new row Uri and in Edit Mode get a number of updated rows
