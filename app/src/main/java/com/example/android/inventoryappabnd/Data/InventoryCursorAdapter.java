@@ -1,9 +1,13 @@
 package com.example.android.inventoryappabnd.Data;
 
+import android.app.Activity;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +15,12 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.inventoryappabnd.EntryEditor;
+import com.example.android.inventoryappabnd.InventoryActivity;
+import com.example.android.inventoryappabnd.ItemDetailActivity;
 import com.example.android.inventoryappabnd.R;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class InventoryCursorAdapter extends CursorAdapter {
 
@@ -36,6 +45,7 @@ public class InventoryCursorAdapter extends CursorAdapter {
         TextView itemPriceTV = view.findViewById(R.id.item_price_tv);
         TextView itemSuppTV = view.findViewById(R.id.item_supp_tv);
         TextView saleButtonTV = view.findViewById(R.id.sale_button);
+        TextView detailsButtonLinkTV = view.findViewById(R.id.product_details_link);
 
         String itemName = cursor.getString(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_NAME));
         final int itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
@@ -44,7 +54,6 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         //use the cursor to get item's id and store in
         final String id = cursor.getString(cursor.getColumnIndex(InventoryContract.InventoryEntry._ID));
-        saleButtonTV.setText(R.string.sale_button_text);
         saleButtonTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +74,20 @@ public class InventoryCursorAdapter extends CursorAdapter {
 
         itemNameTV.setText(itemName);
         itemQntTV.setText(String.valueOf(itemQnt));
-        itemPriceTV.setText("£" + String.valueOf(itemPrice));
+        itemPriceTV.setText(context.getString(R.string.currency_symbol) + String.valueOf(itemPrice));
         itemSuppTV.setText(itemSupp);
+        detailsButtonLinkTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //get the selected item content uri by appending base content uri with the item id from the adapter
+                Uri selectedItemUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
+                Intent detailViewIntent = new Intent(context, ItemDetailActivity.class);
+                //check the value of the uri
+                Log.v("item uri: ", String.valueOf(selectedItemUri));
+                //pass the uri to the ItemDetailActivity activity and start activity
+                detailViewIntent.setData(selectedItemUri);
+                startActivity(detailViewIntent);
+            }
+        });
     }
 }

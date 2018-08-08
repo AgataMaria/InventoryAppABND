@@ -67,7 +67,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
         setContentView(R.layout.activity_entry_editor);
 
         //get intent from the InventoryActivity with the selected item uri to use in Edit Mode
-        //store the uri in selectedItemUri variable
+        //store the uri in currentItemUri variable
         Intent editorEditModeIntent = getIntent();
         currentItemUri = editorEditModeIntent.getData();
 
@@ -84,8 +84,8 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             getLoaderManager().initLoader(EDITOR_LOADER_ID, null, this);
         }
 
-        // Assign editor forms elements to views by ID and set up hints for EditText fields
-        //attached onTouchListeners and set any hints / apply visual changes
+        // Assign editor form's elements to views by ID and set up hints for EditText fields / apply visual changes
+        // attach onTouchListeners to listen for user input / attempt
         mItemTypeSpinner = findViewById(R.id.entry1_spinner);
         mItemTypeSpinner.setOnTouchListener(mTouchListener);
         mItemNameET = findViewById(R.id.entry2_et);
@@ -181,29 +181,30 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             //nothing inserted so return
             return;
         }
-
+        boolean flag = true;
         // Check if any of the form fields haven't been completed and if so, display a toast to warn the user
         if (TextUtils.isEmpty(itemName) ||
                 TextUtils.isEmpty(itemPrice) ||
                 TextUtils.isEmpty(itemQnt) ||
                 TextUtils.isEmpty(itemSuppName) ||
-                TextUtils.isEmpty(itemSuppNo)) {
-            Toast.makeText(this, R.string.empty_fields_warning,
-                    Toast.LENGTH_LONG).show();
-            } else {
-        // otherwise assign input values to table columns
-        cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
-        cv.put(InventoryEntry.COLUMN_ITEM_NAME, itemName);
-        cv.put(InventoryEntry.COLUMN_ITEM_PRICE, itemPrice);
-        cv.put(InventoryEntry.COLUMN_ITEM_QNT, itemQnt);
-        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NAME, itemSuppName);
-        cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo); }
+                TextUtils.isEmpty(itemSuppNo)){
+            Toast.makeText(this, R.string.empty_fields_warning, Toast.LENGTH_LONG).show();
+            flag = false;
+        } else {
+            // otherwise assign input values to table columns
+            cv.put(InventoryEntry.COLUMN_ITEM_TYPE, mItemTypeValue);
+            cv.put(InventoryEntry.COLUMN_ITEM_NAME, itemName);
+            cv.put(InventoryEntry.COLUMN_ITEM_PRICE, itemPrice);
+            cv.put(InventoryEntry.COLUMN_ITEM_QNT, itemQnt);
+            cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NAME, itemSuppName);
+            cv.put(InventoryEntry.COLUMN_ITEM_SUPP_NO, itemSuppNo);
+        }
 
         //Check if its in Add or Edit Mode
         //In Add Mode get a new row Uri and in Edit Mode get a number of updated rows
-        // insert assigned columns + their values to table
+        //insert assigned columns + their values to table
 
-        if (currentItemUri == null) {
+        if (currentItemUri == null & flag) {
             Uri newRowUri = getContentResolver().insert(InventoryEntry.CONTENT_URI, cv);
             // check the value of the new row's address
             Log.v("Add mode - ", "new row uri" + newRowUri);
@@ -216,15 +217,24 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             }
 
         } else {
-            int updatedRows = getContentResolver().update(currentItemUri, cv, null, null);
-            // if successfully updated
-            if (updatedRows == 0) {
-                Toast.makeText(this, R.string.update_failed_toast, Toast.LENGTH_LONG).show();
+            if (TextUtils.isEmpty(itemName) ||
+                    TextUtils.isEmpty(itemPrice) ||
+                    TextUtils.isEmpty(itemQnt) ||
+                    TextUtils.isEmpty(itemSuppName) ||
+                    TextUtils.isEmpty(itemSuppNo)) {
+                Toast.makeText(this, R.string.empty_fields_warning,
+                        Toast.LENGTH_LONG).show();
             } else {
-                // check the value of the updated row's address
-                Log.v("Edit mode - ", "updated rows " + updatedRows);
-                // display a toast message confirming successful entry
-                Toast.makeText(this, R.string.item_updated_toast, Toast.LENGTH_LONG).show();
+                int updatedRows = getContentResolver().update(currentItemUri, cv, null, null);
+                // if successfully updated
+                if (updatedRows == 0) {
+                    Toast.makeText(this, R.string.update_failed_toast, Toast.LENGTH_LONG).show();
+                } else {
+                    // check the value of the updated row's address
+                    Log.v("Edit mode - ", "updated rows " + updatedRows);
+                    // display a toast message confirming successful entry
+                    Toast.makeText(this, R.string.item_updated_toast, Toast.LENGTH_LONG).show();
+                }
             }
         }
     }

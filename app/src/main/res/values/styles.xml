@@ -62,6 +62,7 @@
         <item name="android:layout_marginLeft">@dimen/space_small</item>
         <item name="android:layout_marginRight">@dimen/space_small</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:focusable">true</item>
     </style>
     <!-- Style for the views container layout in listview item -->
     <style name="listViewContainerStyle">
@@ -71,10 +72,18 @@
         <item name="android:layout_marginBottom">@dimen/space_medium</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/listViewItemBackground</item>
+        <item name="android:background">@drawable/item_box_layout</item>
         <item name="android:descendantFocusability">blocksDescendants</item>
         <item name="android:minHeight">@dimen/list_item_min_height</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:baselineAligned">false</item>
     </style>
+    <!-- Style for the values fields in the detail view -->
+    <style name="detailViewTextView">
+        <item name="android:paddingTop">@dimen/space_medium</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        </style>
 </resources>

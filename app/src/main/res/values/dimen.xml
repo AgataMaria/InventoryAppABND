@@ -10,4 +10,5 @@
     <dimen name="spinner_height">48dp</dimen>
     <dimen name="empty_view_text_size">24sp</dimen>
     <dimen name="list_item_min_height">100dp</dimen>
+    <dimen name="quantity_buttons_max_size">40dp</dimen>
 </resources>

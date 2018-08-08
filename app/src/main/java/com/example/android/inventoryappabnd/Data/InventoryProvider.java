@@ -154,7 +154,7 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Cannot save an item without a valid price");
         }
         Integer itemQnt = values.getAsInteger(InventoryEntry.COLUMN_ITEM_QNT);
-        if (itemQnt == null || itemQnt == 0) {
+        if (itemQnt == null || itemQnt < 0) {
             throw new IllegalArgumentException("Must specify item quantity");
         }
 

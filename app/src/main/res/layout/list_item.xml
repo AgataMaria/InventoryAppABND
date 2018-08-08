@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout style="@style/listViewContainerStyle">
+    <LinearLayout style="@style/listViewContainerStyle"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -19,7 +20,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_medium"
-                tools:text="Hanns G HL225 22 inch Widescreen LED Monitor" />
+                android:textColor="@color/colorPrimary"
+                tools:text="Hanns G HL225 22 inch Widescreen LED Monitor"
+                android:fontFamily="@font/lobster_regular"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,20 +32,34 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/colorStandardText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Supplier:"
+                    android:text="@string/supplier_prefix"
                     android:textSize="@dimen/text_tiny" />
 
                 <TextView
+                    android:textColor="@color/colorStandardText"
                     android:paddingLeft="@dimen/space_small"
                     android:id="@+id/item_supp_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_small"
                     tools:text="HANNS.G" />
-
             </LinearLayout>
+            <TextView
+                android:id="@+id/product_details_link"
+                android:fontFamily="@font/lobster_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_small"
+                android:layout_margin="@dimen/space_small"
+                android:text="@string/product_details_text"
+                android:paddingLeft="@dimen/space_small"
+                android:background="@drawable/layout_round"
+                android:textColor="@color/listViewItemBackground"
+                android:clickable="true"
+                android:focusable="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,6 +81,7 @@
                 tools:text="24,89" />
 
             <TextView
+                android:text="@string/sale_button_text"
                 android:id="@+id/sale_button"
                 style="@style/saleButtonStyle" />
 
@@ -73,13 +92,15 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/colorStandardText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:padding="@dimen/space_small"
-                    android:text="Qty: "
+                    android:text="@string/qty_prefix"
                     android:textSize="@dimen/text_small" />
 
                 <TextView
+                    android:textColor="@color/colorStandardText"
                     android:id="@+id/item_qnt_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
