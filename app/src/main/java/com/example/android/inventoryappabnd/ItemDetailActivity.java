@@ -1,7 +1,9 @@
 package com.example.android.inventoryappabnd;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -9,9 +11,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 
@@ -64,7 +68,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     }
 
     private void viewItem() {
-    //TODO: setup a method that will increase or decrease the itemQnt when the buttons are pressed and update the database
+        //TODO: setup a method that will increase or decrease the itemQnt when the buttons are pressed and update the database
     }
 
     /*
@@ -139,15 +143,67 @@ public class ItemDetailActivity extends AppCompatActivity implements
         loader.reset();
 
     }
-/*
-MENU methods
+
+    /*
+    Method for the Deletion warning
+     */
+    private void showDeletionWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.deletion_warning);
+        builder.setPositiveButton(R.string.deletion_confirm, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteItem();    //delete helper method in this activity, not ContentProvider
+            }
+        });
+        builder.setNegativeButton(R.string.deletion_void, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /*
+Deleting a single item from the database
  */
+    private void deleteItem() {
+        // this should only be used in the Edit Mode so check that currentItemUri is not null
+        if (currentItemUri != null) {
+            //use the provider's delete() method through ContentResolver, specifying item's uri
+            int rowsDeleted = getContentResolver().delete(currentItemUri, null, null);
+            // display a toast message to confirm whether deletion was successful or not
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, R.string.delete_failed_toast,
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.item_deleted_toast,
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
+    }
+
+    /*
+    MENU and NAVIGATION
+    */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detailview_menu, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             //home button
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.detailview_action_delete:
+                showDeletionWarning();
                 return true;
         }
         return super.onOptionsItemSelected(item);
