@@ -65,6 +65,8 @@ public class ItemDetailActivity extends AppCompatActivity implements
         lessQntButton = findViewById(R.id.reduce_qnt_button);
         moreQntButton = findViewById(R.id.add_qnt_button);
 
+        getLoaderManager().initLoader(DETAILVIEW_LOADER_ID, null, this);
+
     }
 
     private void viewItem() {
@@ -114,7 +116,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
         }
         //move the cursor to the first position and get column index numbers
         if (loaderCursor.moveToFirst()) {
-            int idColumnIndex = loaderCursor.getColumnIndex(InventoryEntry._ID);
             int itemNameColumnIndex = loaderCursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_NAME);
             int itemPriceColumnIndex = loaderCursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_PRICE);
             int itemQntColumnIndex = loaderCursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_QNT);
@@ -122,7 +123,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
             int itemSuppNoColumnIndex = loaderCursor.getColumnIndex(InventoryEntry.COLUMN_ITEM_SUPP_NO);
 
             //now get values from the cursor
-            int id = loaderCursor.getInt(idColumnIndex);
             String itemName = loaderCursor.getString(itemNameColumnIndex);
             double itemPrice = loaderCursor.getDouble(itemPriceColumnIndex);
             int itemQnt = loaderCursor.getInt(itemQntColumnIndex);
@@ -134,7 +134,8 @@ public class ItemDetailActivity extends AppCompatActivity implements
             detailviewItemPriceTV.setText(Double.toString(itemPrice));
             detailviewItemQntTV.setText(Integer.toString(itemQnt));
             detailviewItemSuppTV.setText(itemSuppName);
-            detailviewItemSuppNoTV.setText(itemSuppNo);
+            detailviewItemSuppNoTV.setText(R.string.supp_phone_prefix + " " +
+                    itemSuppNo);
         }
     }
 
