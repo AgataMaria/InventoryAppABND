@@ -26,14 +26,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InventoryActivity" />
         </activity>
+        <activity
+            android:name=".ItemDetailActivity"
+            android:parentActivityName=".InventoryActivity"
+            android:theme="@style/EntryEditorTheme">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InventoryActivity" />
+        </activity>
 
         <provider
             android:name=".Data.InventoryProvider"
             android:authorities="com.example.android.inventoryappabnd.provider"
             android:exported="false" />
 
-        <activity android:name=".ItemDetailActivity">
-        </activity>
     </application>
 
 </manifest>

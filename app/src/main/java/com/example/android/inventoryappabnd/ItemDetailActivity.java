@@ -7,7 +7,9 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         //retrieve item uri from the Intent that started the activity
         //store the uri in selectedItemUri variable
@@ -136,5 +139,19 @@ public class ItemDetailActivity extends AppCompatActivity implements
         loader.reset();
 
     }
+/*
+MENU methods
+ */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
 

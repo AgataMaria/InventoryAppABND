@@ -15,8 +15,6 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.inventoryappabnd.EntryEditor;
-import com.example.android.inventoryappabnd.InventoryActivity;
 import com.example.android.inventoryappabnd.ItemDetailActivity;
 import com.example.android.inventoryappabnd.R;
 
@@ -80,13 +78,13 @@ public class InventoryCursorAdapter extends CursorAdapter {
             @Override
             public void onClick(View v) {
                 //get the selected item content uri by appending base content uri with the item id from the adapter
-                Uri selectedItemUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, id);
+                Uri selectedItemUri = ContentUris.withAppendedId(InventoryContract.InventoryEntry.CONTENT_URI, Long.parseLong(id));
                 Intent detailViewIntent = new Intent(context, ItemDetailActivity.class);
                 //check the value of the uri
                 Log.v("item uri: ", String.valueOf(selectedItemUri));
                 //pass the uri to the ItemDetailActivity activity and start activity
                 detailViewIntent.setData(selectedItemUri);
-                startActivity(detailViewIntent);
+                context.startActivity(detailViewIntent);
             }
         });
     }
