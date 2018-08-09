@@ -214,6 +214,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                 Toast.makeText(this, R.string.save_failed_toast, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, getString(R.string.item_saved_toast) + newRowUri, Toast.LENGTH_LONG).show();
+                finish();
             }
 
         } else {
@@ -234,6 +235,7 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
                     Log.v("Edit mode - ", "updated rows " + updatedRows);
                     // display a toast message confirming successful entry
                     Toast.makeText(this, R.string.item_updated_toast, Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
         }
@@ -434,7 +436,6 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
             // Respond to a click on the "Save" menu option
             case R.id.editor_menu_action_save:
                 saveItem();
-                finish();
                 return true;
 
             case R.id.editor_menu_action_delete:

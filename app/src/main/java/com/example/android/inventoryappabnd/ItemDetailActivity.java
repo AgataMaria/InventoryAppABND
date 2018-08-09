@@ -2,6 +2,7 @@ package com.example.android.inventoryappabnd;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,14 +14,17 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.inventoryappabnd.Data.InventoryContract;
 import com.example.android.inventoryappabnd.Data.InventoryContract.InventoryEntry;
 
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+    public static final int DETAILVIEW_LOADER_ID = 2;
     /*
    Detail view form fields elements
     */
@@ -36,7 +40,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
     Variables
      */
     private Uri currentItemUri;
-    public static final int DETAILVIEW_LOADER_ID = 2;
     int itemQnt = 0;
 
     /*
@@ -59,23 +62,86 @@ public class ItemDetailActivity extends AppCompatActivity implements
         detailviewItemQntTV = findViewById(R.id.detailview_item_qnt_tv);
         detailviewItemSuppTV = findViewById(R.id.detailview_item_suppname_tv);
         detailviewItemSuppNoTV = findViewById(R.id.detailview_item_suppno_tv);
-        //TODO: setup an intent to call the supplier
+        detailviewItemSuppNoTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String suppNo = detailviewItemSuppNoTV.getText().toString().trim();
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", suppNo, null));
+                startActivity(intent);
+            }
+
+        });
 
         //Find Button elements and listen for clicks to reduce or increase the quantity of the product accordingly
         lessQntButton = findViewById(R.id.reduce_qnt_button);
+        lessQntButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+decreaseQnt(currentItemUri);
+            }
+        });
         moreQntButton = findViewById(R.id.add_qnt_button);
+        moreQntButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+increaseQnt(currentItemUri);
+            }
+        });
 
         getLoaderManager().initLoader(DETAILVIEW_LOADER_ID, null, this);
 
     }
 
-    private void viewItem() {
-        //TODO: setup a method that will increase or decrease the itemQnt when the buttons are pressed and update the database
-    }
 
     /*
+    Helper methods for changing quantity
+     */
+    private void decreaseQnt(Uri uri) {
+        //setup scope for the cursor query and then get cursor
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_QNT};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+        ContentValues cv = new ContentValues();
+        if (!cursor.moveToFirst())
+            cursor.moveToFirst();
+        //find itemQnt value using the cursor and then update the db with a new lessQnt value
+        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
+        if (itemQnt >= 1) {
+            //as long as the quantity is equal or greater than 1, decrease quantity
+            int lessQnt = itemQnt - 1;
+            //and then store the new value for the item with this uri using content values
+            cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, lessQnt);
+            getContentResolver().update(currentItemUri, cv, null, null);
+        }
+    }
+
+    private void increaseQnt(Uri uri) {
+        //setup scope for the cursor query and then get cursor
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_QNT};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+        ContentValues cv = new ContentValues();
+        if (!cursor.moveToFirst())
+            cursor.moveToFirst();
+        //find itemQnt value using the cursor and then update the db with a new lessQnt value
+        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
+        if (itemQnt >= 1) {
+            //as long as the quantity is equal or greater than 1, decrease quantity
+            int moreQnt = itemQnt + 1;
+            //and then store the new value for the item with this uri using content values
+            cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, moreQnt);
+            getContentResolver().update(currentItemUri, cv, null, null);
+        }
+    }
+    
+
+     /*
      Methods required by the Loader Manager
-      */
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //loader to query the db for item values in the background thread
@@ -136,6 +202,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
             detailviewItemSuppTV.setText(itemSuppName);
             detailviewItemSuppNoTV.setText(R.string.supp_phone_prefix + " " +
                     itemSuppNo);
+
         }
     }
 
@@ -168,8 +235,8 @@ public class ItemDetailActivity extends AppCompatActivity implements
     }
 
     /*
-Deleting a single item from the database
- */
+    Deleting a single item from the database
+    */
     private void deleteItem() {
         // this should only be used in the Edit Mode so check that currentItemUri is not null
         if (currentItemUri != null) {
