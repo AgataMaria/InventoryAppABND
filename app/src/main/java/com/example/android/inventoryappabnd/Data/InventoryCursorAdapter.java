@@ -64,9 +64,10 @@ public class InventoryCursorAdapter extends CursorAdapter {
                     //and then store the new value for the item with this uri using content values
                     cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, lessQnt);
                     context.getContentResolver().update(currentItemUri, cv, null, null);
+                    // Display toast to confirm that the quantity has decreased
+                    Toast.makeText(context, R.string.qnt_updated_toast, Toast.LENGTH_SHORT).show();
                 }
-                // Display toast to confirm that the quantity has decreased
-                Toast.makeText(context, R.string.qnt_updated_toast, Toast.LENGTH_SHORT).show();
+
             }
         });
 

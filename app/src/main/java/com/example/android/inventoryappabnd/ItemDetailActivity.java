@@ -247,7 +247,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
             cursor.moveToFirst();
         //find itemQnt value using the cursor and then update the db with a new lessQnt value
         itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
-        if (itemQnt >= 0) {
+        if (itemQnt > 0) {
             //as long as the quantity is equal or greater than 1, decrease quantity
             int lessQnt = itemQnt - 1;
             //and then store the new value for the item with this uri using content values
