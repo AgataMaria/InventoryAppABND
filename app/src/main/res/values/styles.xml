@@ -81,9 +81,25 @@
     <!-- Style for the values fields in the detail view -->
     <style name="detailViewTextView">
         <item name="android:paddingTop">@dimen/space_medium</item>
+        <item name="android:layout_marginLeft">@dimen/space_small</item>
+        <item name="android:layout_marginRight">@dimen/space_small</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textSize">@dimen/text_medium</item>
-        </style>
+        <item name="android:textColor">@color/colorDarkerText</item>
+    </style>
+    <!-- Style for quantity - & + buttons -->
+    <style name="quantityButtonStyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:maxHeight">@dimen/quantity_buttons_max_size</item>
+    <item name="android:maxWidth">@dimen/quantity_buttons_max_size</item>
+    <item name="android:adjustViewBounds">true</item>
+    <item name="android:scaleType">centerInside</item>
+    <item name="android:layout_gravity">center_vertical</item>
+    <item name="android:background">@drawable/layout_round</item>
+    <item name="android:padding">@dimen/space_small</item>
+    <item name="android:layout_margin">@dimen/space_small</item>
+</style>
 </resources>

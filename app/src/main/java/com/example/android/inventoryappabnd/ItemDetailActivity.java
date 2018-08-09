@@ -77,71 +77,23 @@ public class ItemDetailActivity extends AppCompatActivity implements
         lessQntButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-decreaseQnt(currentItemUri);
+                decreaseQnt(currentItemUri);
             }
         });
         moreQntButton = findViewById(R.id.add_qnt_button);
         moreQntButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-increaseQnt(currentItemUri);
+                increaseQnt(currentItemUri);
             }
         });
 
         getLoaderManager().initLoader(DETAILVIEW_LOADER_ID, null, this);
-
     }
-
 
     /*
-    Helper methods for changing quantity
-     */
-    private void decreaseQnt(Uri uri) {
-        //setup scope for the cursor query and then get cursor
-        String[] projection = {
-                InventoryEntry._ID,
-                InventoryEntry.COLUMN_ITEM_QNT};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-
-        ContentValues cv = new ContentValues();
-        if (!cursor.moveToFirst())
-            cursor.moveToFirst();
-        //find itemQnt value using the cursor and then update the db with a new lessQnt value
-        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
-        if (itemQnt >= 1) {
-            //as long as the quantity is equal or greater than 1, decrease quantity
-            int lessQnt = itemQnt - 1;
-            //and then store the new value for the item with this uri using content values
-            cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, lessQnt);
-            getContentResolver().update(currentItemUri, cv, null, null);
-        }
-    }
-
-    private void increaseQnt(Uri uri) {
-        //setup scope for the cursor query and then get cursor
-        String[] projection = {
-                InventoryEntry._ID,
-                InventoryEntry.COLUMN_ITEM_QNT};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-
-        ContentValues cv = new ContentValues();
-        if (!cursor.moveToFirst())
-            cursor.moveToFirst();
-        //find itemQnt value using the cursor and then update the db with a new lessQnt value
-        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
-        if (itemQnt >= 1) {
-            //as long as the quantity is equal or greater than 1, decrease quantity
-            int moreQnt = itemQnt + 1;
-            //and then store the new value for the item with this uri using content values
-            cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, moreQnt);
-            getContentResolver().update(currentItemUri, cv, null, null);
-        }
-    }
-    
-
-     /*
-     Methods required by the Loader Manager
-     */
+    Methods required by the Loader Manager
+    */
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //loader to query the db for item values in the background thread
@@ -200,16 +152,14 @@ increaseQnt(currentItemUri);
             detailviewItemPriceTV.setText(Double.toString(itemPrice));
             detailviewItemQntTV.setText(Integer.toString(itemQnt));
             detailviewItemSuppTV.setText(itemSuppName);
-            detailviewItemSuppNoTV.setText(R.string.supp_phone_prefix + " " +
+            detailviewItemSuppNoTV.setText(getString(R.string.supp_phone_prefix) + " " +
                     itemSuppNo);
-
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         loader.reset();
-
     }
 
     /*
@@ -280,6 +230,49 @@ increaseQnt(currentItemUri);
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    /*
+    Helper methods for changing quantity
+    */
+    private void decreaseQnt(Uri uri) {
+        //setup scope for the cursor query and then get cursor
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_QNT};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+        ContentValues cv = new ContentValues();
+        if (!cursor.moveToFirst())
+            cursor.moveToFirst();
+        //find itemQnt value using the cursor and then update the db with a new lessQnt value
+        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
+        if (itemQnt >= 0) {
+            //as long as the quantity is equal or greater than 1, decrease quantity
+            int lessQnt = itemQnt - 1;
+            //and then store the new value for the item with this uri using content values
+            cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, lessQnt);
+            getContentResolver().update(currentItemUri, cv, null, null);
+        }
+    }
+
+    private void increaseQnt(Uri uri) {
+        //setup scope for the cursor query and then get cursor
+        String[] projection = {
+                InventoryEntry._ID,
+                InventoryEntry.COLUMN_ITEM_QNT};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+
+        ContentValues cv = new ContentValues();
+        if (!cursor.moveToFirst())
+            cursor.moveToFirst();
+        //find itemQnt value using the cursor and then update the db with a new moreQnt value
+        itemQnt = cursor.getInt(cursor.getColumnIndexOrThrow(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT));
+        int moreQnt = itemQnt + 1;
+        //and then store the new value for the item with this uri using content values
+        cv.put(InventoryContract.InventoryEntry.COLUMN_ITEM_QNT, moreQnt);
+        getContentResolver().update(currentItemUri, cv, null, null);
+
     }
 }
 

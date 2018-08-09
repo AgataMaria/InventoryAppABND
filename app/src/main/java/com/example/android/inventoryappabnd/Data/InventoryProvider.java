@@ -150,7 +150,7 @@ public class InventoryProvider extends ContentProvider {
             throw new IllegalArgumentException("Cannot save an item without a name");
         }
         Double itemPrice = values.getAsDouble(InventoryEntry.COLUMN_ITEM_PRICE);
-        if (itemPrice == null|| itemPrice < 0) {
+        if (itemPrice == null || itemPrice < 0) {
             throw new IllegalArgumentException("Cannot save an item without a valid price");
         }
         Integer itemQnt = values.getAsInteger(InventoryEntry.COLUMN_ITEM_QNT);

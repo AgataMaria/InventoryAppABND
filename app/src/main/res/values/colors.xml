@@ -5,6 +5,7 @@
     <color name="colorAccent">#824e60</color>
     <color name="colorPrimaryDark">#2a0010</color>
     <color name="colorStandardText">#8b8589</color>
+    <color name="colorDarkerText">#332f31</color>
     <color name="emptyStateColorText">#8b8589</color>
     <color name="emptyStateColorBackground">#ffffff</color>
     <color name="listViewItemBackground">#ffffff</color>

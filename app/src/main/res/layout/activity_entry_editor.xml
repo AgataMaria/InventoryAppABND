@@ -43,7 +43,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_name_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
                 android:id="@+id/entry2_et"
                 style="@style/EditTextStyle"
                 android:inputType="textCapCharacters" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -69,7 +67,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_prc_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -81,7 +78,6 @@
                 android:id="@+id/entry3_et"
                 style="@style/EditTextStyle"
                 android:inputType="numberDecimal" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -95,7 +91,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_qnt_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -107,7 +102,6 @@
                 android:id="@+id/entry4_et"
                 style="@style/EditTextStyle"
                 android:inputType="number" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -121,7 +115,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_supp_name_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -133,7 +126,6 @@
                 android:id="@+id/entry5_et"
                 style="@style/EditTextStyle"
                 android:inputType="textCapWords" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -146,7 +138,6 @@
         <TextView
             style="@style/EntryLabelStyle"
             android:text="@string/entry_supp_no_label" />
-
 
         <LinearLayout
             android:layout_width="0dp"
@@ -167,7 +158,6 @@
                 style="@style/EditTextStyle"
                 android:layout_weight="6"
                 android:inputType="number" />
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

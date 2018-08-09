@@ -18,7 +18,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_name_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -29,7 +28,6 @@
                 android:id="@+id/detailview_item_name_tv"
                 style="@style/detailViewTextView"
                 tools:text="A VERY LONG ITEM NAME LIKE I DONT KNOW" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -43,7 +41,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_prc_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -54,7 +51,6 @@
                 android:id="@+id/detailview_item_prc_tv"
                 style="@style/detailViewTextView"
                 tools:text="333.78" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -67,8 +63,6 @@
         <TextView
             style="@style/EntryLabelStyle"
             android:text="@string/entry_qnt_label" />
-
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,14 +71,8 @@
 
             <ImageButton
                 android:id="@+id/reduce_qnt_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="@dimen/quantity_buttons_max_size"
-                android:maxWidth="@dimen/quantity_buttons_max_size"
                 android:src="@drawable/mnssgn"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:layout_gravity="center_vertical"/>
+                style="@style/quantityButtonStyle"/>
 
             <TextView
                 android:id="@+id/detailview_item_qnt_tv"
@@ -95,15 +83,8 @@
 
             <ImageButton
                 android:id="@+id/add_qnt_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="@dimen/quantity_buttons_max_size"
-                android:maxWidth="@dimen/quantity_buttons_max_size"
                 android:src="@drawable/plssgn"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:layout_gravity="center_vertical"/>
-
+                style="@style/quantityButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -117,7 +98,6 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_supp_name_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -128,7 +108,6 @@
                 android:id="@+id/detailview_item_suppname_tv"
                 style="@style/detailViewTextView"
                 tools:text="My favourite supplier" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -142,12 +121,11 @@
             style="@style/EntryLabelStyle"
             android:text="@string/entry_supp_no_label" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/space_small">
 
             <TextView
@@ -156,7 +134,13 @@
                 android:clickable="true"
                 tools:text="0114 250 2000" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_tiny"
+                android:text="@string/call_the_suppler_advice"
+                android:textColor="@color/colorStandardText"
+                android:paddingLeft="@dimen/space_small"/>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
