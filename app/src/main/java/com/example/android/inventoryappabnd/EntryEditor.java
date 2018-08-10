@@ -86,21 +86,21 @@ public class EntryEditor extends AppCompatActivity implements LoaderManager.Load
 
         // Assign editor form's elements to views by ID and set up hints for EditText fields / apply visual changes
         // attach onTouchListeners to listen for user input / attempt
-        mItemTypeSpinner = findViewById(R.id.entry1_spinner);
+        mItemTypeSpinner = findViewById(R.id.item_type_spinner);
         mItemTypeSpinner.setOnTouchListener(mTouchListener);
-        mItemNameET = findViewById(R.id.entry2_et);
+        mItemNameET = findViewById(R.id.item_name_et);
         mItemNameET.setOnTouchListener(mTouchListener);
         //Check if the listener works
         Log.v("touchlistener item name", String.valueOf(itemHasChanged));
-        mItemPriceET = findViewById(R.id.entry3_et);
+        mItemPriceET = findViewById(R.id.item_price_et);
         mItemPriceET.setOnTouchListener(mTouchListener);
         mItemPriceET.setHint(Html.fromHtml(
                 "<small>" + getString(R.string.entry_prc_hint) + "</small>"));
-        mItemQntET = findViewById(R.id.entry4_et);
+        mItemQntET = findViewById(R.id.item_qnt_et);
         mItemQntET.setOnTouchListener(mTouchListener);
-        mItemSuppNameET = findViewById(R.id.entry5_et);
+        mItemSuppNameET = findViewById(R.id.supp_name_et);
         mItemSuppNameET.setOnTouchListener(mTouchListener);
-        mItemSuppNoET = findViewById(R.id.entry6_et);
+        mItemSuppNoET = findViewById(R.id.supp_no_et);
         mItemSuppNoET.setOnTouchListener(mTouchListener);
         setupSpinner();
     }

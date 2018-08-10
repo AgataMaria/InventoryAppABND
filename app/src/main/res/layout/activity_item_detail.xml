@@ -77,7 +77,6 @@
             <TextView
                 android:id="@+id/detailview_item_qnt_tv"
                 style="@style/detailViewTextView"
-                tools:text="2"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/space_small"/>
 

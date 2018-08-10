@@ -9,7 +9,6 @@
     tools:context=".EntryEditor">
 
     <LinearLayout
-        android:id="@+id/entry1_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -25,7 +24,7 @@
             android:orientation="vertical">
 
             <Spinner
-                android:id="@+id/entry1_spinner"
+                android:id="@+id/item_type_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/spinner_height"
                 android:paddingRight="@dimen/space_large"
@@ -34,7 +33,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/entry2_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -51,14 +49,13 @@
             android:paddingLeft="@dimen/space_small">
 
             <EditText
-                android:id="@+id/entry2_et"
+                android:id="@+id/item_name_et"
                 style="@style/EditTextStyle"
                 android:inputType="textCapCharacters" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/entry3_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -75,14 +72,13 @@
             android:paddingLeft="@dimen/space_small">
 
             <EditText
-                android:id="@+id/entry3_et"
+                android:id="@+id/item_price_et"
                 style="@style/EditTextStyle"
                 android:inputType="numberDecimal" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/entry4_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -99,14 +95,13 @@
             android:paddingLeft="@dimen/space_small">
 
             <EditText
-                android:id="@+id/entry4_et"
+                android:id="@+id/item_qnt_et"
                 style="@style/EditTextStyle"
                 android:inputType="number" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/entry5_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -123,14 +118,13 @@
             android:paddingLeft="@dimen/space_small">
 
             <EditText
-                android:id="@+id/entry5_et"
+                android:id="@+id/supp_name_et"
                 style="@style/EditTextStyle"
                 android:inputType="textCapWords" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/entry6_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -154,7 +148,7 @@
                 android:text="@string/supp_phone_prefix" />
 
             <EditText
-                android:id="@+id/entry6_et"
+                android:id="@+id/supp_no_et"
                 style="@style/EditTextStyle"
                 android:layout_weight="6"
                 android:inputType="number" />

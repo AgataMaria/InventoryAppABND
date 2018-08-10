@@ -204,7 +204,7 @@ public class InventoryProvider extends ContentProvider {
 
         if (values.containsKey(InventoryEntry.COLUMN_ITEM_QNT)) {
             Integer itemQnt = values.getAsInteger(InventoryEntry.COLUMN_ITEM_QNT);
-            if (itemQnt == null || itemQnt > 0) {
+            if (itemQnt == null || itemQnt < 0) {
                 throw new IllegalArgumentException("Must specify item quantity");
             }
         }
